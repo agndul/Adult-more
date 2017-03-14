@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Adult More</string>
+    <string name="time_check_label">Time check</string>
+    <string name="stretch_label">Stretch out</string>
+    <string name="eat_label">Check your bite</string>
+    <string name="culture_label">Develope a culture</string>
+    <string name="punctual_time_label">Start</string>
+    <string name="stretching_label">Stretching</string>
+    <string name="start_stretching_label">Start stretching</string>
+    <string name="other_label">other</string>
+    <string name="show_history_label">Go to history</string>
+    <string name="error_dashboard">An error occured. Try again.</string>
+    <string name="error_to_do_section">This section is still under construction</string>
+    <string name="subtitle">Helps you get adultier!</string>
+    <string name="label_remote_off">Remote work</string>
+    <string name="label_remote_on">Geolocation disabled</string>
+    <string name="label_excuse">Excuse yourself</string>
+    <string name="label_excuse_added">Excuse added</string>
+    <string name="time_at_work">Today you head up to work at: </string>
+    <string name="timecheck_title">TIMECHECK</string>
+    <string name="timecheck_page_active_title">Current session</string>
+    <string name="timecheck_page_stats_title">Statistics</string>
+
+</resources>

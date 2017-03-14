@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.agadu.adultmore.dashboard.DashboardActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_prl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="@string/time_at_work"
+        android:layout_margin="@dimen/layout_margin_small"
+        android:id="@+id/excusee"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/excuse_prl"
+        app:layout_constraintBottom_toTopOf="@+id/guideline06"
+        app:layout_constraintTop_toBottomOf="@+id/remote_prl"
+        android:layout_width="0dp"
+        style="@style/CheckableTextView">
+
+        <ImageView
+            android:id="@+id/excuse_iv"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/icon_size_medium"
+            app:layout_widthPercent="10%"
+            android:layout_alignParentLeft="true"
+            android:layout_height="@dimen/icon_size_medium"
+            android:src="@drawable/ic_pencil_black_24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:id="@+id/excuse_tv"
+            android:text="@string/label_excuse"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/excuse_prl"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/remote_prl"
+        android:layout_width="0dp"
+        style="@style/CheckableTextView">
+
+        <ImageView
+            android:id="@+id/remote_iv"
+            android:layout_width="@dimen/icon_size_medium"
+            app:layout_widthPercent="10%"
+            android:layout_alignParentLeft="true"
+            android:layout_height="@dimen/icon_size_medium"
+            android:src="@drawable/ic_crosshairs_gps_black_24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:text="@string/label_remote_off"
+            android:layout_width="wrap_content"
+            android:textColor="@color/primary_dark"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/remote_tv"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/excusee"
+        app:layout_constraintTop_toBottomOf="@+id/guideline08"
+        android:id="@+id/start_prl"
+        android:layout_width="0dp"
+        style="@style/CheckableTextView"
+        app:layout_constraintHorizontal_bias="0.0">
+
+        <ImageView
+            android:id="@+id/start_iv"
+            android:layout_width="@dimen/icon_size_medium"
+            app:layout_widthPercent="10%"
+            android:layout_height="@dimen/icon_size_medium"
+            android:src="@drawable/ic_check_all_black_24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            app:layout_widthPercent="70%"
+            android:id="@+id/start_btn"
+            android:text="I am here!"
+            android:textAllCaps="true"
+            android:foregroundGravity="center"
+            android:textIsSelectable="true"
+            android:textColor="@color/primary_dark"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </android.support.percent.PercentRelativeLayout>
+</android.support.constraint.ConstraintLayout>
