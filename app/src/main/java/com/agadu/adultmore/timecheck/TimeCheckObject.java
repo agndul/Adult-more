@@ -1,5 +1,7 @@
 package com.agadu.adultmore.timecheck;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 
 /**
@@ -7,8 +9,9 @@ import io.realm.RealmObject;
  */
 public class TimeCheckObject extends RealmObject{
 
-
     public TimeCheckObject (){}
+    @SerializedName("time")
+    private long time;
     private String startDate;
     private String startTime;
     private int userId;
@@ -75,4 +78,11 @@ public class TimeCheckObject extends RealmObject{
     }
 
 
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public long getTime() {
+        return time;
+    }
 }

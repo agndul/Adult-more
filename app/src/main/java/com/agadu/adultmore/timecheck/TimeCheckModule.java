@@ -13,10 +13,12 @@ public class TimeCheckModule {
 
     private final TimeCheckContract.OuterView mView;
     private final TimeCheckContract.InnerView mInnerView;
+    private final TimeCheckContract.SecondInnerView mSecondInnerView;
 
-    public TimeCheckModule(TimeCheckContract.OuterView view, TimeCheckContract.InnerView innerView) {
+    public TimeCheckModule(TimeCheckContract.OuterView view, TimeCheckContract.InnerView innerView, TimeCheckContract.SecondInnerView secondInnerView) {
         mView = view;
         mInnerView = innerView;
+        mSecondInnerView = secondInnerView;
     }
 
     @Provides
@@ -27,6 +29,11 @@ public class TimeCheckModule {
     @Provides
     TimeCheckContract.InnerView provideTimeCheckInnerView() {
         return mInnerView;
+    }
+
+    @Provides
+    TimeCheckContract.SecondInnerView provideTimeCheckSecondInnerView() {
+        return mSecondInnerView;
     }
 
 }
