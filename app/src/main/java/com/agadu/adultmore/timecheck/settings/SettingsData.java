@@ -5,7 +5,7 @@ package com.agadu.adultmore.timecheck.settings;
  */
 
 public class SettingsData {
-    public static String startTime = "14:15:00";
+    public static String startTime = "8:00:00";
     public static float initial_charge = 2f;
     public static float diff = 1f;
     public static float last_charge = 10f;

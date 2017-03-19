@@ -10,6 +10,7 @@ import com.agadu.adultmore.helpers.TimeFormatsHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -47,7 +48,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     private TimeCheckContract.OuterView mView;
     private TimeCheckContract.InnerView mInnerView;
     private TimeCheckContract.SecondInnerView mSecondInnerView;
-
+    RealmResults<TimeCheckObject> results;
     private String startTime, startDate;
 
     @Inject
@@ -115,9 +116,13 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
     @Override
     public void getHistoryData(Realm mTimeCheckRealm) {
-        RealmResults<TimeCheckObject> results =
-                    mTimeCheckRealm.where(TimeCheckObject.class).findAll().sort("time", Sort.DESCENDING);
+
+        results = mTimeCheckRealm.where(TimeCheckObject.class).findAll().sort("time", Sort.DESCENDING);
 
         mSecondInnerView.initAdapter(results);
+    }
+
+    public TimeCheckObject getStats(int position){
+        return results.get(position);
     }
 }

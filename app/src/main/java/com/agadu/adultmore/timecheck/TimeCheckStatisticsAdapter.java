@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Yoga on 2017-03-19.
@@ -25,11 +26,17 @@ import butterknife.ButterKnife;
 
 public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public interface TimeCheckAdapterActions {
 
+        void onExcuseClicked(int layoutPosition);
+
+    }
+    private TimeCheckAdapterActions mCallback;
     private List<TimeCheckObject> timeCheckObject;
     private Context context;
 
-    public TimeCheckStatisticsAdapter(List<TimeCheckObject> timeCheckObject) {
+    public TimeCheckStatisticsAdapter(TimeCheckAdapterActions callback, List<TimeCheckObject> timeCheckObject) {
+        this.mCallback = callback;
         this.timeCheckObject = timeCheckObject;
     }
 
@@ -64,8 +71,8 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
         TextView moneyAddedTv;
         @BindView(R.id.late_label_tv)
         TextView lateLabelTv;
-        @BindView(R.id.read_excuse_tv)
-        TextView readExcuseTv;
+        @BindView(R.id.read_excuse_iv)
+        ImageView readExcuseIv;
 
         public StatsViewHolder(View itemView) {
             super(itemView);
@@ -91,7 +98,7 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
             }
             moneyAddedTv.setText(money==0 ? context.getString(R.string.no_charge_label) : String.format(Locale.UK, context.getString(R.string.charge_label), money));
 
-            readExcuseTv.setVisibility(!timeCheckObject.getExcuse().isEmpty() ? View.VISIBLE : View.GONE);
+            readExcuseIv.setVisibility(!timeCheckObject.getExcuse().isEmpty() ? View.VISIBLE : View.GONE);
         }
 
         private float countCharge(int minsLate) {
@@ -105,6 +112,10 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
                 }
             }
             return charge;
+        }
+        @OnClick(R.id.read_excuse_iv)
+        public void onReadExcuseClicked(){
+            mCallback.onExcuseClicked(getLayoutPosition());
         }
     }
 }

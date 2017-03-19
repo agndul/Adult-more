@@ -13,7 +13,7 @@
 
 
     <!--timecheck-->
-    <string name="timecheck_title">TIMECHECK</string>
+    <string name="timecheck_title">Timecheck</string>
     <string name="timecheck_page_active_title">Current session</string>
     <string name="timecheck_page_stats_title">Statistics</string>
 
@@ -26,13 +26,13 @@
     <string name="label_your_excuse">Your excuse</string>
 
     <string name="read_excuse">Read excuse</string>
-    <string name="excuse_accepted">Excuse accepted</string>
-    <string name="excuse_rejected">Excuse rejected</string>
+    <string name="excuse_accepted">Accept</string>
+    <string name="excuse_rejected">Reject</string>
     <string name="late_label_mins">%d minutes late:(</string>
-    <string name="late_label_hour">more than 1 hour late:(</string>
-    <string name="late_label_no">Made it on time!:)</string>
-    <string name="charge_label">%.2fPLN collected!</string>
-    <string name="no_charge_label">No PLN collected</string>
+    <string name="late_label_hour">More than 1 hour late :(</string>
+    <string name="late_label_no">Made it on time! Hooray:)</string>
+    <string name="charge_label">+%.2f PLN</string>
+    <string name="no_charge_label">No charge taken</string>
 
 
 </resources>

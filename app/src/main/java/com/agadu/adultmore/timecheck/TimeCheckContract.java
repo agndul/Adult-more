@@ -33,5 +33,6 @@ public interface TimeCheckContract {
         String getStartTime();
         void getHistoryData(Realm mTimeCheckRealm);
 
-        }
+        TimeCheckObject getStats(int layoutPosition);
+    }
 }
