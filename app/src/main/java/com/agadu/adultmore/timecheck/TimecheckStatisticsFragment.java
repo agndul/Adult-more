@@ -1,5 +1,6 @@
 package com.agadu.adultmore.timecheck;
 
+import android.location.LocationManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,9 +31,14 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
         return rootView;
     }
 
-    public void inject(TimeCheckContract.Presenter mTimeCheckPresenter, Realm mTimeCheckRealm) {
+    public void inject(TimeCheckContract.Presenter mTimeCheckPresenter, Realm mTimeCheckRealm, LocationManager mTimeCheckLocationManager) {
         mTimeCheckPresenter = mTimeCheckPresenter;
         mTimeCheckRealm = mTimeCheckRealm;
+
+    }
+
+    @Override
+    public void setCurrentState(String excuse, boolean remote) {
 
     }
 

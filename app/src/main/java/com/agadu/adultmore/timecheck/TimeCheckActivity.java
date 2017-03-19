@@ -4,6 +4,7 @@ package com.agadu.adultmore.timecheck;
  * Created by Yoga on 2016-09-11.
  */
 
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.Button;
 
 import com.agadu.adultmore.R;
 import com.agadu.adultmore.general.modules.DatabaseModule;
+import com.agadu.adultmore.general.modules.LocationModule;
 
 import javax.inject.Inject;
 
@@ -39,8 +41,8 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
     TimeCheckPresenter mTimeCheckPresenter;
     @Inject
     Realm mTimeCheckRealm;
-
-    private boolean isTimeCheckActive = false;  //asve in SP ?
+    @Inject
+    LocationManager mTimeCheckLocationManager;
 
     private TimeCheckViewPagerAdapter mPagerAdapter;
     private TimecheckActiveFragment mTimecheckActiveFragment;
@@ -51,15 +53,16 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
         setContentView(R.layout.activity_timecheck);
         ButterKnife.bind(this);
         // Create the presenter
+        mTimecheckActiveFragment = new TimecheckActiveFragment();
         DaggerTimeCheckComponent.builder()
                 .databaseModule(new DatabaseModule())
-                .timeCheckModule(new TimeCheckModule(this)).build()
+                .locationModule(new LocationModule(this))
+                .timeCheckModule(new TimeCheckModule(this, this.mTimecheckActiveFragment)).build()
                 .inject(this);
-        mTimecheckActiveFragment = new TimecheckActiveFragment();
-        mTimecheckActiveFragment.inject(mTimeCheckPresenter, mTimeCheckRealm);
+        mTimecheckActiveFragment.inject(mTimeCheckPresenter, mTimeCheckRealm, mTimeCheckLocationManager);
         mTimecheckStatisticsFragment = new TimecheckStatisticsFragment();
-        mTimecheckStatisticsFragment.inject(mTimeCheckPresenter, mTimeCheckRealm);
-
+        mTimecheckStatisticsFragment.inject(mTimeCheckPresenter, mTimeCheckRealm, mTimeCheckLocationManager);
+        mTimeCheckPresenter.setLocationListener(mTimeCheckLocationManager);
         setupPager();
     }
 

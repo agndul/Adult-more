@@ -1,5 +1,7 @@
 package com.agadu.adultmore.timecheck;
 
+import android.location.LocationManager;
+
 import io.realm.Realm;
 
 /**
@@ -12,12 +14,16 @@ public interface TimeCheckContract {
     }
 
     interface InnerView {
-        void inject(TimeCheckContract.Presenter mPresenterm, Realm reamldb);
+        void inject(TimeCheckContract.Presenter mPresenterm, Realm reamldb, LocationManager locationManager);
+
+        void setCurrentState(String excuse, boolean remote);
     }
 
     interface Presenter {
-
-        void putTimeIntoDB(Realm mTimeCheckRealm, String excuse, boolean remote);
+        void setLocationListener(LocationManager locationManager);
+        void putTimeIntoDB(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote);
+        void initScreenState(Realm mTimeCheckRealm);
+        void removeLast(Realm mTimeCheckRealm);
         String getStartTime();
     }
 }

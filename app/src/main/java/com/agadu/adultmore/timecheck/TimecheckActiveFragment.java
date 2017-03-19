@@ -1,5 +1,6 @@
 package com.agadu.adultmore.timecheck;
 
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -52,6 +53,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     @BindView(R.id.confirm_reset_iv)
     ImageView confirmResetIv;
 
+    private LocationManager mTimeCheckLocationManager;
     private Realm mTimeCheckRealm;
     private TimeCheckContract.Presenter mTimeCheckPresenter;
 
@@ -62,22 +64,21 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_timecheck_active, container, false);
         ButterKnife.bind(this, rootView);
-
+        mTimeCheckPresenter.initScreenState(mTimeCheckRealm);
         return rootView;
     }
 
-    public void inject(TimeCheckContract.Presenter mPresenterm, Realm reamldb) {
-        mTimeCheckPresenter = mPresenterm;
-        mTimeCheckRealm = reamldb;
-
-    }
 
     @OnClick(R.id.start_prl)
     public void onTimeButtonClick() {
         String excuse = "";
-        mStartPRL.setSelected(true);
         if(!excuseTiet.isEnabled()) excuse =  excuseTiet.getText().toString();
-        mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, excuse, mRemotePRL.isSelected());
+        mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager, excuse, mRemotePRL.isSelected());
+        setStartActive();
+    }
+
+    private void setStartActive() {
+        mStartPRL.setSelected(true);
         mHourTextTV.setVisibility(View.VISIBLE);
         mHourTextTV.setText(String.format(getString(R.string.time_at_work), mTimeCheckPresenter.getStartTime()));
         mResetTV.setVisibility(View.VISIBLE);
@@ -94,10 +95,9 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
 
     @OnClick(R.id.excuse_prl)
     public void onExcuseClicked() {
-        confirmResetIv.setVisibility(View.VISIBLE);
-        excuseTil.setVisibility(View.VISIBLE);
-        excuseTiet.clearComposingText();
-
+        excuseTiet.setEnabled(true);
+        excuseTil.setEnabled(true);
+        showExcuseForm(true);
     }
 
     @OnTextChanged(R.id.excuse_tiet)
@@ -124,12 +124,13 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     }
     @OnClick(R.id.reset)
     public void onResetBtnClicked() {
-
         mStartPRL.setSelected(false);
         mRemotePRL.setSelected(false);
-        mHourTextTV.setVisibility(View.GONE);
         mResetTV.setVisibility(View.GONE);
+        mHourTextTV.setVisibility(View.GONE);
+        showExcuseForm(false);
         blockBiew(false);
+        mTimeCheckPresenter.removeLast(mTimeCheckRealm);
     }
 
     public void blockBiew(boolean block) {
@@ -139,4 +140,31 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
         confirmResetIv.setEnabled(!block);
     }
 
+    @Override
+    public void inject(TimeCheckContract.Presenter mPresenter, Realm reamldb, LocationManager locationManager) {
+        mTimeCheckPresenter = mPresenter;
+        mTimeCheckRealm = reamldb;
+        mTimeCheckLocationManager = locationManager;
+
+    }
+
+    @Override
+    public void setCurrentState(String excuse, boolean remote) {
+        setStartActive();
+        mResetTV.setVisibility(View.GONE);
+        excuseTiet.setEnabled(false);
+        excuseTil.setEnabled(false);
+        if(!excuse.isEmpty()) {
+            showExcuseForm(true);
+            excuseTiet.setText(excuse);
+        }
+        mRemotePRL.setSelected(remote);
+    }
+
+    private void showExcuseForm(boolean show) {
+        confirmResetIv.setVisibility(show ? View.VISIBLE : View.GONE);
+        excuseTil.setVisibility(show ? View.VISIBLE : View.GONE);
+        excuseTiet.setText("");
+
+    }
 }

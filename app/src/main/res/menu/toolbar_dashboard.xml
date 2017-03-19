@@ -4,6 +4,6 @@
 <item
     android:id="@+id/profile_icon"
     app:showAsAction="always"
-    android:icon="@drawable/account_settings_medium"
+    android:icon="@drawable/ic_account_settings_variant_white_24dp"
     android:title=""></item>
 </menu>

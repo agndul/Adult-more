@@ -7,12 +7,32 @@ import io.realm.RealmObject;
  */
 public class TimeCheckObject extends RealmObject{
 
+
     public TimeCheckObject (){}
     private String startDate;
     private String startTime;
     private int userId;
     private String excuse;
     private boolean remote;
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    private double latitude;
+    private double longitude;
 
     public int getUserId() {
         return userId;
@@ -53,4 +73,6 @@ public class TimeCheckObject extends RealmObject{
     public void setRemote(boolean remote) {
         this.remote = remote;
     }
+
+
 }
