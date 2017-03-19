@@ -6,6 +6,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.agadu.adultmore.helpers.TimeFormatsHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Yoga on 2016-09-11.
@@ -40,20 +43,19 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         }
     };
     private String locationProvider = LocationManager.NETWORK_PROVIDER;
-    private String timeFormat = "HH:mm:ss";
-    private String dateFormat = "yyyy-MM-dd";
-    private SimpleDateFormat formatterTime = new SimpleDateFormat(timeFormat);
-    private SimpleDateFormat formatterDate = new SimpleDateFormat(dateFormat);
 
     private TimeCheckContract.OuterView mView;
     private TimeCheckContract.InnerView mInnerView;
+    private TimeCheckContract.SecondInnerView mSecondInnerView;
 
     private String startTime, startDate;
 
     @Inject
-    TimeCheckPresenter(TimeCheckContract.OuterView view, TimeCheckContract.InnerView innerView) {
+    TimeCheckPresenter(TimeCheckContract.OuterView view, TimeCheckContract.InnerView innerView, TimeCheckContract.SecondInnerView secondInnerView) {
         mView = view;
         mInnerView = innerView;
+        mSecondInnerView = secondInnerView;
+
     }
 
     public void setLocationListener(LocationManager locationManager){
@@ -63,8 +65,8 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
 
     public void initScreenState(Realm mTimeCheckRealm){
+        startDate = new TimeFormatsHelper().returnDBDate(Calendar.getInstance().getTime());
 
-        startDate = formatterDate.format(Calendar.getInstance().getTime());
         if(!mTimeCheckRealm.where(TimeCheckObject.class).findAll().isEmpty()) {
             TimeCheckObject lastResult =
                     mTimeCheckRealm.where(TimeCheckObject.class).findAll().last();
@@ -84,10 +86,11 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mTimeCheckRealm.beginTransaction();
 
         TimeCheckObject timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObject.class);
-        startDate = formatterDate.format(lastKnownLocation.getTime());
-        startTime= formatterTime.format(lastKnownLocation.getTime());
+        startDate = new TimeFormatsHelper().returnDBDate(lastKnownLocation.getTime());
+        startTime= new TimeFormatsHelper().returnDBTime(lastKnownLocation.getTime());
         timeCheckObject.setStartDate(startDate);
         timeCheckObject.setStartTime(startTime);
+        timeCheckObject.setTime(lastKnownLocation.getTime());
         timeCheckObject.setLatitude(lastKnownLocation.getLatitude());
         timeCheckObject.setLongitude(lastKnownLocation.getLongitude());
         timeCheckObject.setExcuse(excuse);
@@ -108,5 +111,13 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
     public String getStartTime(){
         return startTime;
+    }
+
+    @Override
+    public void getHistoryData(Realm mTimeCheckRealm) {
+        RealmResults<TimeCheckObject> results =
+                    mTimeCheckRealm.where(TimeCheckObject.class).findAll().sort("time", Sort.DESCENDING);
+
+        mSecondInnerView.initAdapter(results);
     }
 }

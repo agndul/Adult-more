@@ -22,6 +22,7 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:name="com.agadu.adultmore.timecheck.TimeCheckActivity" />
         <activity
             android:screenOrientation="portrait"

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:background="@color/primary"
+        android:padding="@dimen/layout_margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
+        <ImageView
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:tint="@color/primary_light"
+            android:id="@+id/remote_indicator_iv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/crosshairs_gps"
+            />
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/date_label_tv"
+            android:textSize="@dimen/text_size_small"
+            android:layout_height="wrap_content"
+            android:text="16th Feb"/>
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/layout_margin_large"
+            android:id="@+id/money_added_tv"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/accent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1.50 zł"/>
+        <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/late_label_tv"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/late_label_mins"/>
+        <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/read_excuse_tv"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/primary_light"
+            android:layout_height="wrap_content"
+            android:text="@string/read_excuse"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_height="@dimen/main_line_width"
+        android:layout_width="match_parent"
+        android:background="@color/accent" />
+</LinearLayout>

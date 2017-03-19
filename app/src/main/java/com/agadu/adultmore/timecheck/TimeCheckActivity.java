@@ -54,14 +54,16 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
         ButterKnife.bind(this);
         // Create the presenter
         mTimecheckActiveFragment = new TimecheckActiveFragment();
+        mTimecheckStatisticsFragment = new TimecheckStatisticsFragment();
+
         DaggerTimeCheckComponent.builder()
                 .databaseModule(new DatabaseModule())
                 .locationModule(new LocationModule(this))
-                .timeCheckModule(new TimeCheckModule(this, this.mTimecheckActiveFragment)).build()
+                .timeCheckModule(new TimeCheckModule(this, this.mTimecheckActiveFragment, this.mTimecheckStatisticsFragment)).build()
                 .inject(this);
+
         mTimecheckActiveFragment.inject(mTimeCheckPresenter, mTimeCheckRealm, mTimeCheckLocationManager);
-        mTimecheckStatisticsFragment = new TimecheckStatisticsFragment();
-        mTimecheckStatisticsFragment.inject(mTimeCheckPresenter, mTimeCheckRealm, mTimeCheckLocationManager);
+        mTimecheckStatisticsFragment.inject(mTimeCheckPresenter, mTimeCheckRealm);
         mTimeCheckPresenter.setLocationListener(mTimeCheckLocationManager);
         setupPager();
     }
