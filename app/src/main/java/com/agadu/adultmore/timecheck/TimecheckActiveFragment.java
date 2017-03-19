@@ -130,7 +130,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
         mHourTextTV.setVisibility(View.GONE);
         showExcuseForm(false);
         blockBiew(false);
-       // mTimeCheckPresenter.removeLast(mTimeCheckRealm);
+        mTimeCheckPresenter.removeLast(mTimeCheckRealm);
     }
 
     public void blockBiew(boolean block) {
@@ -151,7 +151,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     @Override
     public void setCurrentState(String excuse, boolean remote) {
         setStartActive();
-   //     mResetTV.setVisibility(View.GONE);
+        mResetTV.setVisibility(View.GONE);
         excuseTiet.setEnabled(false);
         excuseTil.setEnabled(false);
         if(!excuse.isEmpty()) {
