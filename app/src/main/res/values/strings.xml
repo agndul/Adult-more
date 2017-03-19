@@ -12,13 +12,15 @@
     <string name="error_dashboard">An error occured. Try again.</string>
     <string name="error_to_do_section">This section is still under construction</string>
     <string name="subtitle">Helps you get adultier!</string>
-    <string name="label_remote_off">Remote work</string>
-    <string name="label_remote_on">Geolocation disabled</string>
+    <string name="label_remote_off">Remote work disabled</string>
+    <string name="label_remote_on">Remote work enabled</string>
     <string name="label_excuse">Excuse yourself</string>
     <string name="label_excuse_added">Excuse added</string>
-    <string name="time_at_work">Today you head up to work at: </string>
+    <string name="time_at_work">Today you head up to work at: %s</string>
     <string name="timecheck_title">TIMECHECK</string>
     <string name="timecheck_page_active_title">Current session</string>
     <string name="timecheck_page_stats_title">Statistics</string>
+    <string name="reset_label">Reset today</string>
+    <string name="label_your_excuse">Your excuse</string>
 
 </resources>

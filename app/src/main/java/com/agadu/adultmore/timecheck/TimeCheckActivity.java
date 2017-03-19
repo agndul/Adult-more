@@ -29,6 +29,7 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @BindView(R.id.pager)
     ViewPager mPager;
     @BindView(R.id.tabs)

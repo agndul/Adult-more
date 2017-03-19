@@ -27,5 +27,6 @@
     <dimen name="icon_size_medium">@dimen/_24sdp</dimen>
     <dimen name="icon_size_large">@dimen/_42sdp</dimen>
     <dimen name="layout_margin_large">@dimen/_25sdp</dimen>
+    <dimen name="main_line_width">1px</dimen>
 
 </resources>

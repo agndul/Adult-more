@@ -12,11 +12,12 @@ public interface TimeCheckContract {
     }
 
     interface InnerView {
-        void inject(TimeCheckPresenter mPresenterm, Realm reamldb);
+        void inject(TimeCheckContract.Presenter mPresenterm, Realm reamldb);
     }
 
     interface Presenter {
 
-        void getTimeCheck(Realm mTimeCheckRealm);
+        void putTimeIntoDB(Realm mTimeCheckRealm, String excuse, boolean remote);
+        String getStartTime();
     }
 }

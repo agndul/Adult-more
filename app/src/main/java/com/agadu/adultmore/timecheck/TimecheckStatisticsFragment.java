@@ -19,7 +19,7 @@ import io.realm.RealmResults;
 public class TimecheckStatisticsFragment extends Fragment implements TimeCheckContract.InnerView {
 
     private Realm mTimeCheckRealm;
-    private TimeCheckPresenter mTimeCheckPresenter;
+    private TimeCheckContract.Presenter mTimeCheckPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +30,7 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
         return rootView;
     }
 
-    public void inject(TimeCheckPresenter mTimeCheckPresenter, Realm mTimeCheckRealm) {
+    public void inject(TimeCheckContract.Presenter mTimeCheckPresenter, Realm mTimeCheckRealm) {
         mTimeCheckPresenter = mTimeCheckPresenter;
         mTimeCheckRealm = mTimeCheckRealm;
 

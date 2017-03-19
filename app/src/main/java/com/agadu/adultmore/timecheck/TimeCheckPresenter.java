@@ -21,23 +21,33 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
     private TimeCheckContract.OuterView mView;
 
+    private String startTime, startDate;
+
     @Inject
     TimeCheckPresenter(TimeCheckContract.OuterView view) {
         mView = view;
     }
 
 
-    public void getTimeCheck(Realm mTimeCheckRealm){
+    public void putTimeIntoDB(Realm mTimeCheckRealm, String excuse, boolean remote){
 
         mTimeCheckRealm.beginTransaction();
 
         TimeCheckObject timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObject.class);
 
-        timeCheckObject.setStartDate(formatterDate.format(Calendar.getInstance().getTime()));
-        timeCheckObject.setStartTime(formatterTime.format(Calendar.getInstance().getTime()));
+        startDate = formatterDate.format(Calendar.getInstance().getTime());
+        startTime = formatterTime.format(Calendar.getInstance().getTime());
+        timeCheckObject.setStartDate(startDate);
+        timeCheckObject.setStartTime(startTime);
+        timeCheckObject.setExcuse(excuse);
+        timeCheckObject.setRemote(remote);
         timeCheckObject.setUserId(0);
 
         mTimeCheckRealm.commitTransaction();
 
+    }
+
+    public String getStartTime(){
+        return startTime;
     }
 }

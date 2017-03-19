@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +23,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/primary"
+    android:background="@color/accent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -33,20 +35,20 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="@dimen/_20sdp"
-        android:layout_marginRight="0.5dp"
+        android:layout_marginRight="@dimen/main_line_width"
         android:paddingLeft="3dp"
-        android:layout_marginBottom="0.5dp"
+        android:layout_marginBottom="@dimen/main_line_width"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/stretch_out_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/eating_btn"
-        android:background="@drawable/button_shape">
+        android:background="@drawable/button_shape"
+        android:layout_marginEnd="@dimen/main_line_width">
 
         <ImageView
             android:src="@drawable/timelapse_white"
             android:layout_width="@dimen/icon_size_large"
             android:padding="@dimen/_6sdp"
-            android:tint="@color/accent"
             android:id="@+id/time_check_iv"
             android:layout_height="@dimen/icon_size_large"/>
         <TextView
@@ -70,19 +72,19 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="@dimen/_20sdp"
-        android:layout_marginBottom="0.5dp"
-        android:layout_marginLeft="0.5dp"
+        android:layout_marginBottom="@dimen/main_line_width"
+        android:layout_marginLeft="@dimen/main_line_width"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/time_check_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/culture_btn"
         android:background="@drawable/button_shape"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginStart="@dimen/main_line_width">
 
         <ImageView
             android:layout_width="@dimen/icon_size_large"
             android:padding="@dimen/_6sdp"
-            android:tint="@color/accent"
             android:src="@drawable/human_handsup_white"
             android:id="@+id/stretch_out_iv"
             android:layout_height="@dimen/icon_size_large"/>
@@ -103,25 +105,26 @@
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/culture_btn"
-        android:textColor="#3F51B5"
         android:textSize="30sp"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginTop="0.5dp"
+        android:layout_marginLeft="@dimen/main_line_width"
+        android:layout_marginTop="@dimen/main_line_width"
         android:paddingTop="@dimen/_20sdp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/eating_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stretch_out_btn"
         android:background="@drawable/button_shape"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginStart="@dimen/main_line_width"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:src="@drawable/brush_white"
             android:layout_width="@dimen/icon_size_large"
             android:padding="@dimen/_6sdp"
-            android:tint="@color/accent"
             android:id="@+id/culture_iv"
             android:layout_height="@dimen/icon_size_large"/>
         <TextView
@@ -148,14 +151,14 @@
         app:layout_constraintTop_toBottomOf="@+id/time_check_btn"
         android:background="@drawable/button_shape"
         android:gravity="center"
-        android:layout_marginRight="0.5dp"
-        android:layout_marginTop="0.5dp"
+        android:layout_marginRight="@dimen/main_line_width"
+        android:layout_marginTop="@dimen/main_line_width"
         android:layout_width="0dp"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/main_line_width">
         <ImageView
             android:layout_width="@dimen/icon_size_large"
             android:padding="@dimen/_6sdp"
-            android:tint="@color/accent"
             android:src="@drawable/food_variant_white"
             android:id="@+id/eating_iv"
             android:layout_height="@dimen/icon_size_large"/>
@@ -177,4 +180,4 @@
 
 </android.support.constraint.ConstraintLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

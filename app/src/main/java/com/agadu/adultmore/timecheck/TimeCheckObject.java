@@ -7,10 +7,12 @@ import io.realm.RealmObject;
  */
 public class TimeCheckObject extends RealmObject{
 
+    public TimeCheckObject (){}
     private String startDate;
     private String startTime;
     private int userId;
-    public TimeCheckObject (){}
+    private String excuse;
+    private boolean remote;
 
     public int getUserId() {
         return userId;
@@ -36,4 +38,19 @@ public class TimeCheckObject extends RealmObject{
         this.startTime = startTime;
     }
 
+    public String getExcuse() {
+        return excuse;
+    }
+
+    public void setExcuse(String excuse) {
+        this.excuse = excuse;
+    }
+
+    public boolean isRemote() {
+        return remote;
+    }
+
+    public void setRemote(boolean remote) {
+        this.remote = remote;
+    }
 }
