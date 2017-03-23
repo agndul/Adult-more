@@ -87,7 +87,7 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
             float money=0;
 
             if (diffHours > 0) {
-                money = SettingsData.last_charge;
+                money = SettingsData.LAST_CHARGE;
                 lateLabelTv.setText(R.string.late_label_hour);
             } else if (diffHours == 0 && diffMins > 0){
                 money = countCharge(diffMins);
@@ -102,11 +102,11 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         private float countCharge(int minsLate) {
-            float charge = SettingsData.initial_charge;
+            float charge = SettingsData.INITIAL_CHARGE;
             if(minsLate>15){
                 for(int i=15; i<60; i+=15){
                     if(minsLate>i)
-                        charge += SettingsData.diff;
+                        charge += SettingsData.DIFFERENCE;
                     else
                         break;
                 }

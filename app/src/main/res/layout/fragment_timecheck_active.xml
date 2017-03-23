@@ -167,7 +167,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/start_btn"
-            android:text="I am here!"
+            android:text="@string/timecheck_start_label"
             android:textAllCaps="true"
             android:foregroundGravity="center"
             android:textIsSelectable="true"

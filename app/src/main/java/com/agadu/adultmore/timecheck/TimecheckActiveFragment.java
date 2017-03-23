@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.agadu.adultmore.R;
 
@@ -19,8 +20,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.realm.Realm;
-
-import static butterknife.OnTextChanged.Callback.TEXT_CHANGED;
 
 /**
  * Created by Yoga on 2017-03-09.
@@ -71,13 +70,21 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
 
     @OnClick(R.id.start_prl)
     public void onTimeButtonClick() {
-        String excuse = "";
-        if(!excuseTiet.isEnabled()) excuse =  excuseTiet.getText().toString();
-        mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager, excuse, mRemotePRL.isSelected());
-        setStartActive();
+        if (mRemotePRL.isSelected()) {
+            setStartActive();
+        } else {
+            if (mTimeCheckPresenter.checkDestLocation(mTimeCheckLocationManager)) {
+                setStartActive();
+            } else
+                Toast.makeText(this.getActivity(), R.string.wrong_destination_place_label, Toast.LENGTH_LONG).show();
+        }
     }
 
+
+
     private void setStartActive() {
+        mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager,
+                !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
         mStartPRL.setSelected(true);
         mHourTextTV.setVisibility(View.VISIBLE);
         mHourTextTV.setText(String.format(getString(R.string.time_at_work), mTimeCheckPresenter.getStartTime()));
@@ -151,7 +158,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     @Override
     public void setCurrentState(String excuse, boolean remote) {
         setStartActive();
-        mResetTV.setVisibility(View.GONE);
+  //      mResetTV.setVisibility(View.GONE);
         excuseTiet.setEnabled(false);
         excuseTil.setEnabled(false);
         if(!excuse.isEmpty()) {

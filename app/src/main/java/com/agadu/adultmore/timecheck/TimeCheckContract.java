@@ -27,6 +27,9 @@ public interface TimeCheckContract {
     }
     interface Presenter {
         void setLocationListener(LocationManager locationManager);
+
+        boolean checkDestLocation(LocationManager mTimeCheckLocationManager);
+
         void putTimeIntoDB(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote);
         void initScreenState(Realm mTimeCheckRealm);
         void removeLast(Realm mTimeCheckRealm);

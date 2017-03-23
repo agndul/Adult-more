@@ -4,19 +4,21 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 
+import com.agadu.adultmore.helpers.DistanceHelper;
 import com.agadu.adultmore.helpers.TimeFormatsHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import static com.agadu.adultmore.timecheck.settings.SettingsData.DEST_LAT;
+import static com.agadu.adultmore.timecheck.settings.SettingsData.DEST_LON;
+import static com.agadu.adultmore.timecheck.settings.SettingsData.RADIUS;
 
 /**
  * Created by Yoga on 2016-09-11.
@@ -58,13 +60,14 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mSecondInnerView = secondInnerView;
 
     }
-
+    @Override
     public void setLocationListener(LocationManager locationManager){
         locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
 
     }
 
 
+    @Override
     public void initScreenState(Realm mTimeCheckRealm){
         startDate = new TimeFormatsHelper().returnDBDate(Calendar.getInstance().getTime());
 
@@ -79,8 +82,14 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
             }
         }
     }
-
-
+    @Override
+    public boolean checkDestLocation(LocationManager locationManager) {
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        if(new DistanceHelper().getDistance(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude(), DEST_LON, DEST_LAT) > RADIUS)
+            return false;
+        else return true;
+    }
+    @Override
     public void putTimeIntoDB(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote){
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 
@@ -101,7 +110,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mTimeCheckRealm.commitTransaction();
 
     }
-
+    @Override
     public void removeLast(Realm mTimeCheckRealm){
 
         mTimeCheckRealm.beginTransaction();
@@ -110,6 +119,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
     }
 
+    @Override
     public String getStartTime(){
         return startTime;
     }
@@ -122,6 +132,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mSecondInnerView.initAdapter(results);
     }
 
+    @Override
     public TimeCheckObject getStats(int position){
         return results.get(position);
     }

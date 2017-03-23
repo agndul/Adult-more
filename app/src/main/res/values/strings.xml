@@ -33,6 +33,8 @@
     <string name="late_label_no">Made it on time! Hooray:)</string>
     <string name="charge_label">+%.2f PLN</string>
     <string name="no_charge_label">No charge taken</string>
+    <string name="timecheck_start_label">I am here!</string>
+    <string name="wrong_destination_place_label">Are you sure that you work here?</string>
 
 
 </resources>
