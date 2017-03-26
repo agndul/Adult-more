@@ -85,6 +85,8 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     @Override
     public boolean checkDestLocation(LocationManager locationManager) {
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        if(lastKnownLocation==null)
+            return false;
         if(new DistanceHelper().getDistance(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude(), DEST_LON, DEST_LAT) > RADIUS)
             return false;
         else return true;
@@ -96,13 +98,13 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mTimeCheckRealm.beginTransaction();
 
         TimeCheckObj timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObj.class);
-        startDate = new TimeFormatsHelper().returnDBDate(lastKnownLocation.getTime());
-        startTime= new TimeFormatsHelper().returnDBTime(lastKnownLocation.getTime());
+        startDate = new TimeFormatsHelper().returnDBDate(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getDate());
+        startTime= new TimeFormatsHelper().returnDBTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
         timeCheckObject.setStartDate(startDate);
         timeCheckObject.setStartTime(startTime);
-        timeCheckObject.setTime(lastKnownLocation.getTime());
-        timeCheckObject.setLatitude(lastKnownLocation.getLatitude());
-        timeCheckObject.setLongitude(lastKnownLocation.getLongitude());
+        timeCheckObject.setTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
+        timeCheckObject.setLatitude(lastKnownLocation!=null ? lastKnownLocation.getLatitude() : 0);
+        timeCheckObject.setLongitude(lastKnownLocation!=null ? lastKnownLocation.getLongitude() : 0);
         timeCheckObject.setExcuse(excuse);
         timeCheckObject.setRemote(remote);
         timeCheckObject.setUserId(0);

@@ -35,7 +35,20 @@
     <string name="no_charge_label">No charge taken</string>
     <string name="timecheck_start_label">I am here!</string>
     <string name="wrong_destination_place_label">Are you sure that you work here?</string>
-    <string name="timecheck_settings_charging">Set charging</string>
+
+    <!-- timecheck/settings -->
+    <string name="settings_title">Settings</string>
+
+    <string name="charging_section_title">Set charging</string>
+    <string name="timing_section_title">Set timing</string>
+    <string name="initial_charge_label">Initial charge</string>
+    <string name="step_charge_label">Step charge</string>
+    <string name="max_charge_label">Max charge</string>
+    <string name="start_time_label">Start time</string>
+    <string name="minutes_late_label">Minutes late</string>
+    <string name="max_late_label">Max late (h)</string>
+    <string name="location_input_label">Type location</string>
+    <string name="location_section_title">Location</string>
 
 
 </resources>
