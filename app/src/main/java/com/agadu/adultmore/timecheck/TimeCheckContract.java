@@ -22,8 +22,9 @@ public interface TimeCheckContract {
     }
     interface SecondInnerView {
         void inject(TimeCheckContract.Presenter mTimeCheckPresenter, Realm mTimeCheckRealm);
-        void initAdapter(List<TimeCheckObject> timecheckObj);
+        void initAdapter(List<TimeCheckObj> timecheckObj);
 
+        void refreshAdapter();
     }
     interface Presenter {
         void setLocationListener(LocationManager locationManager);
@@ -36,6 +37,10 @@ public interface TimeCheckContract {
         String getStartTime();
         void getHistoryData(Realm mTimeCheckRealm);
 
-        TimeCheckObject getStats(int layoutPosition);
+        TimeCheckObj getStats(int layoutPosition);
+        void setExcuseAccepted(Realm mTimeCheckRealm, int layoutPosition, boolean b);
+
+        void refresh();
+
     }
 }

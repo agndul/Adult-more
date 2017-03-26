@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/timecheck_stats_rv"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_margin="@dimen/layout_margin_medium"
     android:layout_height="match_parent"
-    tools:context="com.agadu.adultmore.dashboard.DashboardActivity"
-    >
-
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_btn"
-        android:text="@string/punctual_time_label"
-        android:textIsSelectable="true"
-        android:textColor="@color/primary_dark"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/CheckableTextView"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
-
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_width="match_parent">
+    </android.support.v7.widget.RecyclerView>

@@ -1,15 +1,18 @@
 package com.agadu.adultmore.timecheck;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
 /**
- * Created by Yoga on 2016-09-11.
+ * Created by Yoga on 2017-03-26.
  */
-public class TimeCheckObject extends RealmObject{
 
-    public TimeCheckObject (){}
+public class TimeCheckObj extends RealmObject {
+
+    public TimeCheckObj(){}
     @SerializedName("time")
     private long time;
     private String startDate;
@@ -17,7 +20,9 @@ public class TimeCheckObject extends RealmObject{
     private int userId;
     private String excuse;
     private boolean remote;
-
+    private double latitude;
+    private double longitude;
+    @Nullable private Boolean isExcuseAccepted;
     public double getLatitude() {
         return latitude;
     }
@@ -34,8 +39,6 @@ public class TimeCheckObject extends RealmObject{
         this.longitude = longitude;
     }
 
-    private double latitude;
-    private double longitude;
 
     public int getUserId() {
         return userId;
@@ -72,17 +75,21 @@ public class TimeCheckObject extends RealmObject{
     public boolean isRemote() {
         return remote;
     }
-
     public void setRemote(boolean remote) {
         this.remote = remote;
     }
-
-
     public void setTime(long time) {
         this.time = time;
     }
-
     public long getTime() {
         return time;
+    }
+
+    public void setExcuseAccepted( @Nullable Boolean isAccepted) {
+        isExcuseAccepted = isAccepted;
+    }
+    @Nullable
+    public Boolean isExcuseAccepted() {
+        return isExcuseAccepted;
     }
 }

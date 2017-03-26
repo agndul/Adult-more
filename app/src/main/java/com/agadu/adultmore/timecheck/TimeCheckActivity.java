@@ -12,9 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.agadu.adultmore.R;
 import com.agadu.adultmore.general.modules.DatabaseModule;
@@ -71,6 +75,7 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
     public void setupPager() {
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().getNavigationMode();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.timecheck_title);
         mPagerAdapter = new TimeCheckViewPagerAdapter(getSupportFragmentManager());
@@ -80,5 +85,26 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
         tabLayout.setupWithViewPager(mPager);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar_timecheck, menu);
+        return super.onCreateOptionsMenu(menu);
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.profile_icon:
+                Toast.makeText(this, R.string.error_to_do_section, Toast.LENGTH_SHORT).show();
+                break;
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
 }

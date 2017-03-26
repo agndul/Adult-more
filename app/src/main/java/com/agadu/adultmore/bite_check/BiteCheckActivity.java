@@ -24,7 +24,7 @@ public class BiteCheckActivity extends AppCompatActivity implements BiteCheckCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_timecheck_settings);
+        setContentView(R.layout.activity_timecheck_settings);
 
         DaggerBiteCheckComponent
                 .builder()

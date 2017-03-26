@@ -50,7 +50,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     private TimeCheckContract.OuterView mView;
     private TimeCheckContract.InnerView mInnerView;
     private TimeCheckContract.SecondInnerView mSecondInnerView;
-    RealmResults<TimeCheckObject> results;
+    RealmResults<TimeCheckObj> results;
     private String startTime, startDate;
 
     @Inject
@@ -71,9 +71,9 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     public void initScreenState(Realm mTimeCheckRealm){
         startDate = new TimeFormatsHelper().returnDBDate(Calendar.getInstance().getTime());
 
-        if(!mTimeCheckRealm.where(TimeCheckObject.class).findAll().isEmpty()) {
-            TimeCheckObject lastResult =
-                    mTimeCheckRealm.where(TimeCheckObject.class).findAll().last();
+        if(!mTimeCheckRealm.where(TimeCheckObj.class).findAll().isEmpty()) {
+            TimeCheckObj lastResult =
+                    mTimeCheckRealm.where(TimeCheckObj.class).findAll().last();
 
             String currentStartDate = lastResult.getStartDate();
             if (startDate.equals(currentStartDate)) {
@@ -95,7 +95,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
         mTimeCheckRealm.beginTransaction();
 
-        TimeCheckObject timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObject.class);
+        TimeCheckObj timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObj.class);
         startDate = new TimeFormatsHelper().returnDBDate(lastKnownLocation.getTime());
         startTime= new TimeFormatsHelper().returnDBTime(lastKnownLocation.getTime());
         timeCheckObject.setStartDate(startDate);
@@ -114,7 +114,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     public void removeLast(Realm mTimeCheckRealm){
 
         mTimeCheckRealm.beginTransaction();
-        mTimeCheckRealm.where(TimeCheckObject.class).findAll().last().deleteFromRealm();
+        mTimeCheckRealm.where(TimeCheckObj.class).findAll().deleteLastFromRealm();
         mTimeCheckRealm.commitTransaction();
 
     }
@@ -127,13 +127,28 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     @Override
     public void getHistoryData(Realm mTimeCheckRealm) {
 
-        results = mTimeCheckRealm.where(TimeCheckObject.class).findAll().sort("time", Sort.DESCENDING);
+        results = mTimeCheckRealm.where(TimeCheckObj.class).findAll().sort("time", Sort.DESCENDING);
 
         mSecondInnerView.initAdapter(results);
     }
 
     @Override
-    public TimeCheckObject getStats(int position){
+    public TimeCheckObj getStats(int position){
         return results.get(position);
+    }
+
+    @Override
+    public void setExcuseAccepted(Realm mTimeCheckRealm, int layoutPosition, boolean accepted) {
+
+        mTimeCheckRealm.beginTransaction();
+        mTimeCheckRealm.where(TimeCheckObj.class).findAll().get(layoutPosition).setExcuseAccepted(accepted);
+        mTimeCheckRealm.commitTransaction();
+        refresh();
+    }
+
+    @Override
+    public void refresh(){
+        mSecondInnerView.refreshAdapter();
+
     }
 }

@@ -35,7 +35,7 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_timecheck_settings, container, false);
+                R.layout.fragment_timecheck_statistics, container, false);
         ButterKnife.bind(this, rootView);
         mTimeCheckPresenter.getHistoryData(mTimeCheckRealm);
         return rootView;
@@ -46,14 +46,19 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
         this.mTimeCheckRealm = timeCheckRealm;
     }
     @Override
-    public void initAdapter(List<TimeCheckObject> timecheckObj){
+    public void initAdapter(List<TimeCheckObj> timecheckObj){
         adapter = new TimeCheckStatisticsAdapter(this, timecheckObj);
         timecheckStatsRv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         timecheckStatsRv.setAdapter(adapter);
     }
 
     @Override
-    public void onExcuseClicked(int layoutPosition) {
+    public void refreshAdapter() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onExcuseClicked(final int layoutPosition) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(TimecheckStatisticsFragment.this.getContext(), R.style.DialogStyle);
         builder.setTitle(R.string.label_your_excuse)
@@ -61,10 +66,16 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
                 .setPositiveButton(R.string.excuse_accepted, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //todo: change charge, change icon - comment-accepted
+                        mTimeCheckPresenter.setExcuseAccepted(mTimeCheckRealm, layoutPosition, true);
                     }
                 })
-                .setNegativeButton(R.string.excuse_rejected, null)
+                .setNegativeButton(R.string.excuse_rejected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mTimeCheckPresenter.setExcuseAccepted(mTimeCheckRealm, layoutPosition, false);
+                    }
+                })
+
                 .show();
     }
 }

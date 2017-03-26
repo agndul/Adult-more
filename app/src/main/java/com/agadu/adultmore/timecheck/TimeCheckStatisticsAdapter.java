@@ -32,10 +32,11 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
     private TimeCheckAdapterActions mCallback;
-    private List<TimeCheckObject> timeCheckObject;
+    private List<TimeCheckObj> timeCheckObject;
     private Context context;
+    private StatsViewHolder viewHolder;
 
-    public TimeCheckStatisticsAdapter(TimeCheckAdapterActions callback, List<TimeCheckObject> timeCheckObject) {
+     public TimeCheckStatisticsAdapter(TimeCheckAdapterActions callback, List<TimeCheckObj> timeCheckObject) {
         this.mCallback = callback;
         this.timeCheckObject = timeCheckObject;
     }
@@ -44,14 +45,14 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_timecheck_statistics, parent, false);
-        StatsViewHolder viewHolder = new StatsViewHolder(view);
+        viewHolder = new StatsViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         try {
-            ((StatsViewHolder) holder).setData(timeCheckObject.get(position));
+            viewHolder.setData(timeCheckObject.get(position));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -61,6 +62,7 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
     public int getItemCount() {
         return timeCheckObject.size();
     }
+
 
     public class StatsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.remote_indicator_iv)
@@ -78,7 +80,7 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-        public void setData(TimeCheckObject timeCheckObject) throws ParseException {
+        public void setData(TimeCheckObj timeCheckObject) throws ParseException {
 
             remoteIndicatorIv.setVisibility(timeCheckObject.isRemote() ? View.VISIBLE : View.GONE);
             dateLabelTv.setText(new TimeFormatsHelper().returnPreviewDate(timeCheckObject.getTime()));
@@ -99,6 +101,9 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
             moneyAddedTv.setText(money==0 ? context.getString(R.string.no_charge_label) : String.format(Locale.UK, context.getString(R.string.charge_label), money));
 
             readExcuseIv.setVisibility(!timeCheckObject.getExcuse().isEmpty() ? View.VISIBLE : View.GONE);
+            if(timeCheckObject.isExcuseAccepted() != null){
+                readExcuseIv.setImageResource(timeCheckObject.isExcuseAccepted() ? R.drawable.ic_comment_check_grey600_24dp : R.drawable.ic_comment_alert_grey600_24dp);
+            }
         }
 
         private float countCharge(int minsLate) {

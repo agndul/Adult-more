@@ -35,6 +35,7 @@
     <string name="no_charge_label">No charge taken</string>
     <string name="timecheck_start_label">I am here!</string>
     <string name="wrong_destination_place_label">Are you sure that you work here?</string>
+    <string name="timecheck_settings_charging">Set charging</string>
 
 
 </resources>

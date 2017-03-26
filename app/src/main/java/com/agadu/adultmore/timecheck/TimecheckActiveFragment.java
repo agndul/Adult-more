@@ -70,21 +70,18 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
 
     @OnClick(R.id.start_prl)
     public void onTimeButtonClick() {
-        if (mRemotePRL.isSelected()) {
+        if (mRemotePRL.isSelected() || mTimeCheckPresenter.checkDestLocation(mTimeCheckLocationManager)) {
+            mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager,
+                    !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
+            mTimeCheckPresenter.refresh();
             setStartActive();
-        } else {
-            if (mTimeCheckPresenter.checkDestLocation(mTimeCheckLocationManager)) {
-                setStartActive();
-            } else
-                Toast.makeText(this.getActivity(), R.string.wrong_destination_place_label, Toast.LENGTH_LONG).show();
-        }
+        } else
+            Toast.makeText(this.getActivity(), R.string.wrong_destination_place_label, Toast.LENGTH_LONG).show();
     }
 
 
 
     private void setStartActive() {
-        mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager,
-                !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
         mStartPRL.setSelected(true);
         mHourTextTV.setVisibility(View.VISIBLE);
         mHourTextTV.setText(String.format(getString(R.string.time_at_work), mTimeCheckPresenter.getStartTime()));
@@ -158,7 +155,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     @Override
     public void setCurrentState(String excuse, boolean remote) {
         setStartActive();
-  //      mResetTV.setVisibility(View.GONE);
+        mResetTV.setVisibility(View.GONE);
         excuseTiet.setEnabled(false);
         excuseTil.setEnabled(false);
         if(!excuse.isEmpty()) {
