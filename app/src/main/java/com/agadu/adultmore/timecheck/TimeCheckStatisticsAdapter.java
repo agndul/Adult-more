@@ -33,18 +33,20 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
     }
     private TimeCheckAdapterActions mCallback;
     private List<TimeCheckObj> timeCheckObject;
+    private SettingsData settingsData;
     private Context context;
     private StatsViewHolder viewHolder;
 
-     public TimeCheckStatisticsAdapter(TimeCheckAdapterActions callback, List<TimeCheckObj> timeCheckObject) {
+     public TimeCheckStatisticsAdapter(List<TimeCheckObj> timeCheckObject, SettingsData settingsData, TimeCheckAdapterActions callback) {
         this.mCallback = callback;
         this.timeCheckObject = timeCheckObject;
+         this.settingsData = settingsData;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_timecheck_statistics, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timecheck_statistics, parent, false);
         viewHolder = new StatsViewHolder(view);
         return viewHolder;
     }
@@ -83,13 +85,13 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
         public void setData(TimeCheckObj timeCheckObject) throws ParseException {
 
             remoteIndicatorIv.setVisibility(timeCheckObject.isRemote() ? View.VISIBLE : View.GONE);
-            dateLabelTv.setText(new TimeFormatsHelper().returnPreviewDate(timeCheckObject.getTime()));
-            int diffMins = (int) new TimeFormatsHelper().returnMinsDiff(timeCheckObject.getStartTime());
+            dateLabelTv.setText(TimeFormatsHelper.returnPreviewDate(timeCheckObject.getTime()));
+            int diffMins = (int) TimeFormatsHelper.returnMinsDiff(timeCheckObject.getStartTime(), settingsData.getStartTime());
             int diffHours = diffMins/60;
             float money=0;
 
             if (diffHours > 0) {
-                money = SettingsData.LAST_CHARGE;
+                money = settingsData.getMaxCharge();
                 lateLabelTv.setText(R.string.late_label_hour);
             } else if (diffHours == 0 && diffMins > 0){
                 money = countCharge(diffMins);
@@ -107,11 +109,11 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         private float countCharge(int minsLate) {
-            float charge = SettingsData.INITIAL_CHARGE;
+            float charge = settingsData.getInitialCharge();
             if(minsLate>15){
                 for(int i=15; i<60; i+=15){
                     if(minsLate>i)
-                        charge += SettingsData.DIFFERENCE;
+                        charge += settingsData.getDifference();
                     else
                         break;
                 }

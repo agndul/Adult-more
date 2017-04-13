@@ -71,7 +71,7 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
     @OnClick(R.id.start_prl)
     public void onTimeButtonClick() {
         if (mRemotePRL.isSelected() || mTimeCheckPresenter.checkDestLocation(mTimeCheckLocationManager)) {
-            mTimeCheckPresenter.putTimeIntoDB(mTimeCheckRealm, mTimeCheckLocationManager,
+            mTimeCheckPresenter.putTimeIntoDb(mTimeCheckRealm, mTimeCheckLocationManager,
                     !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
             mTimeCheckPresenter.refresh();
             setStartActive();

@@ -1,23 +1,21 @@
 package com.agadu.adultmore.timecheck.settings;
 
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.agadu.adultmore.BuildConfig;
 import com.agadu.adultmore.R;
 import com.agadu.adultmore.general.modules.DatabaseModule;
 import com.agadu.adultmore.general.modules.LocationModule;
+import com.agadu.adultmore.timecheck.TimeCheckActivity;
 import com.agadu.adultmore.timecheck.settings.adapter_settings.TCSettingsAdapter;
-
-import org.osmdroid.config.Configuration;
-import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
 import javax.inject.Inject;
 
@@ -29,18 +27,15 @@ import io.realm.Realm;
  * Created by Yoga on 2017-03-09.
  */
 
-public class TimecheckSettingsActivity extends AppCompatActivity implements TimecheckSettingsContract.View{
+public class TimecheckSettingsActivity extends AppCompatActivity
+        implements TimecheckSettingsContract.View {
 
-    @Inject
-    TimeCheckSettingsPresenter mTimeCheckSettingsPresenter;
-    @Inject
-    Realm mTimeCheckRealm;
-    @Inject
-    LocationManager mTimeCheckLocationManager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.settings_rv)
-    RecyclerView settingsRv;
+    @Inject TimeCheckSettingsPresenter mTimeCheckSettingsPresenter;
+    @Inject Realm mTimeCheckRealm;
+    @Inject LocationManager mTimeCheckLocationManager;
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.settings_rv) RecyclerView settingsRv;
 
     private TCSettingsAdapter adapter;
 
@@ -84,7 +79,7 @@ public class TimecheckSettingsActivity extends AppCompatActivity implements Time
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_icon:
-                //todo: save settings!
+                saveSettings();
                 break;
             case R.id.cancel_icon:
                 super.onBackPressed();
@@ -95,4 +90,17 @@ public class TimecheckSettingsActivity extends AppCompatActivity implements Time
         return false;
     }
 
+    private void saveSettings() {
+        if(adapter.isAnyFieldEmpty()){
+            Toast.makeText(this, "All of the fields should be filled", Toast.LENGTH_LONG).show();
+        }else {
+            mTimeCheckSettingsPresenter.updateSettings(mTimeCheckRealm, adapter.getData());
+        }
+    }
+
+    @Override
+    public void goToTimeCheck() {
+        finish();
+        startActivity(new Intent(this, TimeCheckActivity.class));
+    }
 }

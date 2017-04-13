@@ -2,6 +2,8 @@ package com.agadu.adultmore.timecheck;
 
 import android.location.LocationManager;
 
+import com.agadu.adultmore.timecheck.settings.SettingsData;
+
 import java.util.List;
 
 import io.realm.Realm;
@@ -22,7 +24,7 @@ public interface TimeCheckContract {
     }
     interface SecondInnerView {
         void inject(TimeCheckContract.Presenter mTimeCheckPresenter, Realm mTimeCheckRealm);
-        void initAdapter(List<TimeCheckObj> timecheckObj);
+        void initAdapter(List<TimeCheckObj> timecheckObj, SettingsData settingsData);
 
         void refreshAdapter();
     }
@@ -31,8 +33,11 @@ public interface TimeCheckContract {
 
         boolean checkDestLocation(LocationManager mTimeCheckLocationManager);
 
-        void putTimeIntoDB(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote);
+        void putTimeIntoDb(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote);
         void initScreenState(Realm mTimeCheckRealm);
+
+        void putSettingsIntoDb(Realm mTimeCheckRealm);
+
         void removeLast(Realm mTimeCheckRealm);
         String getStartTime();
         void getHistoryData(Realm mTimeCheckRealm);

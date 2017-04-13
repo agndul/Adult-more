@@ -2,7 +2,6 @@ package com.agadu.adultmore.timecheck;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.agadu.adultmore.R;
+import com.agadu.adultmore.timecheck.settings.SettingsData;
 
 import java.util.List;
 
@@ -46,8 +46,8 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
         this.mTimeCheckRealm = timeCheckRealm;
     }
     @Override
-    public void initAdapter(List<TimeCheckObj> timecheckObj){
-        adapter = new TimeCheckStatisticsAdapter(this, timecheckObj);
+    public void initAdapter(List<TimeCheckObj> timecheckObj, SettingsData settingsData){
+        adapter = new TimeCheckStatisticsAdapter(timecheckObj, settingsData, this);
         timecheckStatsRv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         timecheckStatsRv.setAdapter(adapter);
     }

@@ -29,18 +29,10 @@
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
-                android:inputType="time"
+                android:inputType="textAutoComplete"
                 android:layout_height="wrap_content"
                 android:id="@+id/location_tiet"
                 android:hint="@string/location_input_label"/>
         </android.support.design.widget.TextInputLayout>
-
-        <org.osmdroid.views.MapView
-            android:id="@+id/mapview"
-            tilesource="Mapnik"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
-
     </LinearLayout>
 </LinearLayout>

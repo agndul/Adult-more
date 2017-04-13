@@ -36,12 +36,9 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
-    @Inject
-    TimeCheckPresenter mTimeCheckPresenter;
-    @Inject
-    Realm mTimeCheckRealm;
-    @Inject
-    LocationManager mTimeCheckLocationManager;
+    @Inject TimeCheckPresenter mTimeCheckPresenter;
+    @Inject Realm mTimeCheckRealm;
+    @Inject LocationManager mTimeCheckLocationManager;
 
     private TimeCheckViewPagerAdapter mPagerAdapter;
     private TimecheckActiveFragment mTimecheckActiveFragment;

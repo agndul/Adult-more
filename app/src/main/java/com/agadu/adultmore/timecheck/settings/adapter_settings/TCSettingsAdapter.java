@@ -8,6 +8,10 @@ import com.agadu.adultmore.timecheck.settings.SettingsData;
 
 import java.util.List;
 
+import static com.agadu.adultmore.timecheck.settings.adapter_settings.ChargeDelegate.CHARGE_TYPE;
+import static com.agadu.adultmore.timecheck.settings.adapter_settings.LocationDelegate.LOCATION_TYPE;
+import static com.agadu.adultmore.timecheck.settings.adapter_settings.TimeDelegate.TIME_TYPE;
+
 /**
  * Created by Yoga on 2017-03-26.
  */
@@ -16,9 +20,11 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private List<SettingsItemDelegate> delegates;
     private Context mContext;
+    private AdapterGeneralData data;
 
     public TCSettingsAdapter(Context context) {
         mContext = context;
+        data = new AdapterGeneralData();
         delegates = new DelegatesFactory().createDelegates();
     }
 
@@ -45,5 +51,35 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position){
         return delegates.get(position).getViewType();
+    }
+
+    public boolean isAnyFieldEmpty(){
+        boolean isAnyFieldEmpty=false;
+        int pos = 0;
+        for (SettingsItemDelegate delegate: delegates) {
+            if (delegate.getViewType() == getItemViewType(pos)) {
+                isAnyFieldEmpty = delegate.isAnyFieldEmpty();
+                if (isAnyFieldEmpty) break;
+            }
+            pos++;
+        }
+        return isAnyFieldEmpty;
+    }
+
+    public AdapterGeneralData getData() {
+        for (SettingsItemDelegate delegate: delegates) {
+            switch (delegate.getViewType()) {
+                case CHARGE_TYPE:
+                    data.setChargeData((ChargeData) delegate.getData());
+                     break;
+                case LOCATION_TYPE:
+                    data.setLocationData((LocationData) delegate.getData());
+                    break;
+                case TIME_TYPE:
+                    data.setTimeData((TimeData) delegate.getData());
+                    break;
+            }
+        }
+        return data;
     }
 }

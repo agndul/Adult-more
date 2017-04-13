@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.agadu.adultmore.helpers.DistanceHelper;
 import com.agadu.adultmore.helpers.TimeFormatsHelper;
+import com.agadu.adultmore.timecheck.settings.SettingsData;
 
 import java.util.Calendar;
 
@@ -16,8 +17,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-import static com.agadu.adultmore.timecheck.settings.SettingsData.DEST_LAT;
-import static com.agadu.adultmore.timecheck.settings.SettingsData.DEST_LON;
 import static com.agadu.adultmore.timecheck.settings.SettingsData.RADIUS;
 
 /**
@@ -50,8 +49,9 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     private TimeCheckContract.OuterView mView;
     private TimeCheckContract.InnerView mInnerView;
     private TimeCheckContract.SecondInnerView mSecondInnerView;
-    RealmResults<TimeCheckObj> results;
+    private RealmResults<TimeCheckObj> results;
     private String startTime, startDate;
+    private SettingsData settingsData;
 
     @Inject
     TimeCheckPresenter(TimeCheckContract.OuterView view, TimeCheckContract.InnerView innerView, TimeCheckContract.SecondInnerView secondInnerView) {
@@ -69,7 +69,16 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
     @Override
     public void initScreenState(Realm mTimeCheckRealm){
-        startDate = new TimeFormatsHelper().returnDBDate(Calendar.getInstance().getTime());
+        startDate = TimeFormatsHelper.returnDBDate(Calendar.getInstance().getTime());
+
+        if(!mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty()) {
+            settingsData =
+                    mTimeCheckRealm.where(SettingsData.class).findAll().first();
+        }else {
+            putSettingsIntoDb(mTimeCheckRealm);
+            settingsData =
+                    mTimeCheckRealm.where(SettingsData.class).findAll().first();
+        }
 
         if(!mTimeCheckRealm.where(TimeCheckObj.class).findAll().isEmpty()) {
             TimeCheckObj lastResult =
@@ -87,19 +96,19 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
         if(lastKnownLocation==null)
             return false;
-        if(new DistanceHelper().getDistance(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude(), DEST_LON, DEST_LAT) > RADIUS)
+        if(DistanceHelper.getDistance(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude(), settingsData.getDestLongitude(), settingsData.getDestLatitude()) > RADIUS)
             return false;
         else return true;
     }
     @Override
-    public void putTimeIntoDB(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote){
+    public void putTimeIntoDb(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote){
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 
         mTimeCheckRealm.beginTransaction();
 
         TimeCheckObj timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObj.class);
-        startDate = new TimeFormatsHelper().returnDBDate(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getDate());
-        startTime= new TimeFormatsHelper().returnDBTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
+        startDate = TimeFormatsHelper.returnDBDate(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getDate());
+        startTime= TimeFormatsHelper.returnDBTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
         timeCheckObject.setStartDate(startDate);
         timeCheckObject.setStartTime(startTime);
         timeCheckObject.setTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
@@ -112,6 +121,16 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mTimeCheckRealm.commitTransaction();
 
     }
+
+    @Override
+    public void putSettingsIntoDb(Realm mTimeCheckRealm){
+
+        mTimeCheckRealm.beginTransaction();
+        settingsData = mTimeCheckRealm.createObject(SettingsData.class);
+        mTimeCheckRealm.commitTransaction();
+
+    }
+
     @Override
     public void removeLast(Realm mTimeCheckRealm){
 
@@ -130,8 +149,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
     public void getHistoryData(Realm mTimeCheckRealm) {
 
         results = mTimeCheckRealm.where(TimeCheckObj.class).findAll().sort("time", Sort.DESCENDING);
-
-        mSecondInnerView.initAdapter(results);
+        mSecondInnerView.initAdapter(results, settingsData);
     }
 
     @Override

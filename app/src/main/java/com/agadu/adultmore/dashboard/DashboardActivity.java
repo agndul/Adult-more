@@ -13,12 +13,15 @@ import com.agadu.adultmore.R;
 import com.agadu.adultmore.bite_check.BiteCheckActivity;
 import com.agadu.adultmore.general.AdultMoreApp;
 import com.agadu.adultmore.timecheck.TimeCheckActivity;
+import com.agadu.adultmore.timecheck.settings.SettingsData;
+import com.agadu.adultmore.timecheck.settings.TimecheckSettingsActivity;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 
 public class DashboardActivity extends AppCompatActivity implements DashboardContract.View {
@@ -27,6 +30,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
     Toolbar toolbar;
     @Inject Context mContext;
     @Inject DashboardPresenter mDashboardPresenter;
+    @Inject Realm mTimeCheckRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,12 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 
     @OnClick(R.id.time_check_btn)
     public void onTimeCheckButtonClick() {
-        Intent intent = new Intent(this, TimeCheckActivity.class);
+        Intent intent;
+        if(!mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty()) {
+            intent = new Intent(this, TimeCheckActivity.class);
+        }else {
+            intent = new Intent(this, TimecheckSettingsActivity.class);
+        }
         startActivity(intent);
     }
 

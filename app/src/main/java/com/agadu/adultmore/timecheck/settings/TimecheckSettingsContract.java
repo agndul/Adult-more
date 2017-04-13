@@ -7,6 +7,7 @@ package com.agadu.adultmore.timecheck.settings;
 public interface TimecheckSettingsContract {
 
     interface View {
+        void goToTimeCheck();
     }
 
     interface Presenter {

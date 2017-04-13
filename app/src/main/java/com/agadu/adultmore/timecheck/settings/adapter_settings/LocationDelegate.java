@@ -9,31 +9,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.agadu.adultmore.R;
+import com.agadu.adultmore.helpers.CheckTextFieldsHelper;
 import com.agadu.adultmore.timecheck.settings.SettingsData;
 
 import org.osmdroid.views.MapView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 /**
  * Created by Yoga on 2017-03-26.
  */
 
-public class LocationDelegate implements SettingsItemDelegate {
+class LocationDelegate implements SettingsItemDelegate {
 
-    private static final int LOCATION_TYPE = 3;
-
+    public static final int LOCATION_TYPE = 3;
 
     private LocationViewHolder viewHolder;
+    private static LocationData mLocationData;
 
     @Override
     public ViewHolder onCreateViewHolder(Context context, ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_location_delegate, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.partial_location_delegate, parent, false);
         viewHolder = new LocationViewHolder(view);
+        mLocationData = new LocationData();
         return viewHolder;
     }
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, SettingsData data) {
@@ -44,16 +46,29 @@ public class LocationDelegate implements SettingsItemDelegate {
         return LOCATION_TYPE;
     }
 
+    @Override
+    public boolean isAnyFieldEmpty() {
+        return CheckTextFieldsHelper.checkFieldsEmpty(viewHolder.locationTiet);
+    }
+
+    @Override
+    public AdapterData getData() {
+        return null;
+    }
+
     static class LocationViewHolder extends ViewHolder {
 
         @BindView(R.id.location_tiet)
         TextInputEditText locationTiet;
         @BindView(R.id.location_til)
         TextInputLayout locationTil;
-        @BindView(R.id.mapview)
-        MapView mapview;
 
-        public LocationViewHolder(View itemView) {
+        @OnTextChanged(R.id.location_tiet)
+        public void onLocationChanged(){
+            mLocationData.setLocation(locationTiet.getText().toString());
+        }
+
+        LocationViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
