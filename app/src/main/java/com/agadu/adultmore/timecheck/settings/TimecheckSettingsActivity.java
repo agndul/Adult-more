@@ -1,6 +1,5 @@
 package com.agadu.adultmore.timecheck.settings;
 
-import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import com.agadu.adultmore.R;
 import com.agadu.adultmore.general.modules.DatabaseModule;
 import com.agadu.adultmore.general.modules.LocationModule;
-import com.agadu.adultmore.timecheck.TimeCheckActivity;
 import com.agadu.adultmore.timecheck.settings.adapter_settings.TCSettingsAdapter;
 
 import javax.inject.Inject;
@@ -53,20 +51,14 @@ public class TimecheckSettingsActivity extends AppCompatActivity
                 .inject(this);
 
         setupToolbar();
-        initAdapter();
+        mTimeCheckSettingsPresenter.initView(mTimeCheckRealm);
 
     }
-
-    private void initAdapter() {
-        adapter = new TCSettingsAdapter(this);
+    @Override
+    public void initAdapter(SettingsData settingsData) {
+        adapter = new TCSettingsAdapter(this, settingsData);
         settingsRv.setLayoutManager(new LinearLayoutManager(this));
         settingsRv.setAdapter(adapter);
-    }
-
-
-    public void setupToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.settings_title);
     }
 
     @Override
@@ -80,6 +72,7 @@ public class TimecheckSettingsActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.save_icon:
                 saveSettings();
+                finish();
                 break;
             case R.id.cancel_icon:
                 super.onBackPressed();
@@ -94,13 +87,13 @@ public class TimecheckSettingsActivity extends AppCompatActivity
         if(adapter.isAnyFieldEmpty()){
             Toast.makeText(this, "All of the fields should be filled", Toast.LENGTH_LONG).show();
         }else {
+            mTimeCheckSettingsPresenter.removeLast(mTimeCheckRealm);
             mTimeCheckSettingsPresenter.updateSettings(mTimeCheckRealm, adapter.getData());
         }
     }
 
-    @Override
-    public void goToTimeCheck() {
-        finish();
-        startActivity(new Intent(this, TimeCheckActivity.class));
+    public void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.settings_title);
     }
 }

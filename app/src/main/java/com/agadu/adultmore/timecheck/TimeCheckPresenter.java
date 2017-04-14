@@ -1,9 +1,7 @@
 package com.agadu.adultmore.timecheck;
 
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.agadu.adultmore.helpers.DistanceHelper;
 import com.agadu.adultmore.helpers.TimeFormatsHelper;
@@ -22,29 +20,8 @@ import static com.agadu.adultmore.timecheck.settings.SettingsData.RADIUS;
 /**
  * Created by Yoga on 2016-09-11.
  */
-public class TimeCheckPresenter implements TimeCheckContract.Presenter{
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
+public class TimeCheckPresenter implements TimeCheckContract.Presenter {
 
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            //todo: show error if disabled, hide error if enabled
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-            //todo: show error (dialog with expl)
-        }
-    };
-    private String locationProvider = LocationManager.NETWORK_PROVIDER;
 
     private TimeCheckContract.OuterView mView;
     private TimeCheckContract.InnerView mInnerView;
@@ -60,12 +37,6 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         mSecondInnerView = secondInnerView;
 
     }
-    @Override
-    public void setLocationListener(LocationManager locationManager){
-        locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-
-    }
-
 
     @Override
     public void initScreenState(Realm mTimeCheckRealm){
@@ -73,11 +44,11 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
 
         if(!mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty()) {
             settingsData =
-                    mTimeCheckRealm.where(SettingsData.class).findAll().first();
+                    mTimeCheckRealm.where(SettingsData.class).findAll().last();
         }else {
             putSettingsIntoDb(mTimeCheckRealm);
             settingsData =
-                    mTimeCheckRealm.where(SettingsData.class).findAll().first();
+                    mTimeCheckRealm.where(SettingsData.class).findAll().last();
         }
 
         if(!mTimeCheckRealm.where(TimeCheckObj.class).findAll().isEmpty()) {
@@ -92,8 +63,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         }
     }
     @Override
-    public boolean checkDestLocation(LocationManager locationManager) {
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+    public boolean checkDestLocation(Location lastKnownLocation) {
         if(lastKnownLocation==null)
             return false;
         if(DistanceHelper.getDistance(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude(), settingsData.getDestLongitude(), settingsData.getDestLatitude()) > RADIUS)
@@ -101,8 +71,7 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter{
         else return true;
     }
     @Override
-    public void putTimeIntoDb(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote){
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+    public void putTimeIntoDb(Realm mTimeCheckRealm, @Nullable Location lastKnownLocation, String excuse, boolean remote){
 
         mTimeCheckRealm.beginTransaction();
 

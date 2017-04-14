@@ -26,6 +26,13 @@ public class TimeFormatsHelper {
     public static String returnDBTime(long time){
         return new SimpleDateFormat(timeFormat).format(time);
     }
+    public static int returnMins(String time) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);
+        Date mins = sdf.parse(time);
+        long milisecs = mins.getTime();
+        return (int) milisecs/1000;
+    }
+
     public static float returnMinsDiff(String time, String timeSettings) throws ParseException {
         float minDiff = getTimeDifference(time, timeSettings)/1000/60;
         return minDiff;

@@ -4,10 +4,15 @@ package com.agadu.adultmore.timecheck;
  * Created by Yoga on 2016-09-11.
  */
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,17 +33,15 @@ import io.realm.Realm;
 
 public class TimeCheckActivity extends AppCompatActivity implements TimeCheckContract.OuterView {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R.id.pager)
-    ViewPager mPager;
-    @BindView(R.id.tabs)
-    TabLayout tabLayout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.pager) ViewPager mPager;
+    @BindView(R.id.tabs) TabLayout tabLayout;
 
     @Inject TimeCheckPresenter mTimeCheckPresenter;
     @Inject Realm mTimeCheckRealm;
     @Inject LocationManager mTimeCheckLocationManager;
+
+    public static String sLocationProvider = LocationManager.NETWORK_PROVIDER;
 
     private TimeCheckViewPagerAdapter mPagerAdapter;
     private TimecheckActiveFragment mTimecheckActiveFragment;
@@ -60,8 +63,12 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
 
         mTimecheckActiveFragment.inject(mTimeCheckPresenter, mTimeCheckRealm, mTimeCheckLocationManager);
         mTimecheckStatisticsFragment.inject(mTimeCheckPresenter, mTimeCheckRealm);
-        mTimeCheckPresenter.setLocationListener(mTimeCheckLocationManager);
         setupPager();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mTimeCheckLocationManager.requestLocationUpdates(sLocationProvider, 0, 0, locationListener);
     }
 
     public void setupPager() {
@@ -96,4 +103,27 @@ public class TimeCheckActivity extends AppCompatActivity implements TimeCheckCon
         }
         return false;
     }
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            //todo: show error if disabled, hide error if enabled
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            //todo: show error (dialog with expl)
+        }
+    };
+
 }

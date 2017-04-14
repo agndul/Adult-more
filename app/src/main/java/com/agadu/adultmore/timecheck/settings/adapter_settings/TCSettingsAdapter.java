@@ -20,12 +20,15 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private List<SettingsItemDelegate> delegates;
     private Context mContext;
-    private AdapterGeneralData data;
+    private AdapterGeneralData mData;
+    private SettingsData mSettingsData;
 
-    public TCSettingsAdapter(Context context) {
+
+    public TCSettingsAdapter(Context context, SettingsData settingsData) {
         mContext = context;
-        data = new AdapterGeneralData();
+        mData = new AdapterGeneralData();
         delegates = new DelegatesFactory().createDelegates();
+        mSettingsData = settingsData;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        delegates.get(position).onBindViewHolder(holder, new SettingsData());
+        delegates.get(position).onBindViewHolder(holder, mSettingsData);
     }
 
     @Override
@@ -70,16 +73,16 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         for (SettingsItemDelegate delegate: delegates) {
             switch (delegate.getViewType()) {
                 case CHARGE_TYPE:
-                    data.setChargeData((ChargeData) delegate.getData());
+                    mData.setChargeData((ChargeData) delegate.getData());
                      break;
-                case LOCATION_TYPE:
-                    data.setLocationData((LocationData) delegate.getData());
-                    break;
                 case TIME_TYPE:
-                    data.setTimeData((TimeData) delegate.getData());
+                    mData.setTimeData((TimeData) delegate.getData());
+                    break;
+                case LOCATION_TYPE:
+                    mData.setLocationData((LocationData) delegate.getData());
                     break;
             }
         }
-        return data;
+        return mData;
     }
 }

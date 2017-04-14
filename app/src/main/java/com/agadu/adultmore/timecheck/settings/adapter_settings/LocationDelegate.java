@@ -39,6 +39,7 @@ class LocationDelegate implements SettingsItemDelegate {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, SettingsData data) {
+        viewHolder.setData(data);
     }
 
     @Override
@@ -53,7 +54,7 @@ class LocationDelegate implements SettingsItemDelegate {
 
     @Override
     public AdapterData getData() {
-        return null;
+        return mLocationData;
     }
 
     static class LocationViewHolder extends ViewHolder {
@@ -71,6 +72,12 @@ class LocationDelegate implements SettingsItemDelegate {
         LocationViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public void setData(SettingsData data) {
+
+            locationTiet.setText(String.valueOf(data.getLocation()));
+
         }
     }
 }

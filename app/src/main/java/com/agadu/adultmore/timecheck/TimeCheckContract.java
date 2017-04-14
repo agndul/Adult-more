@@ -1,6 +1,8 @@
 package com.agadu.adultmore.timecheck;
 
+import android.location.Location;
 import android.location.LocationManager;
+import android.support.annotation.Nullable;
 
 import com.agadu.adultmore.timecheck.settings.SettingsData;
 
@@ -29,11 +31,9 @@ public interface TimeCheckContract {
         void refreshAdapter();
     }
     interface Presenter {
-        void setLocationListener(LocationManager locationManager);
+        boolean checkDestLocation(Location lastKnownLocation);
 
-        boolean checkDestLocation(LocationManager mTimeCheckLocationManager);
-
-        void putTimeIntoDb(Realm mTimeCheckRealm, LocationManager locationManager, String excuse, boolean remote);
+        void putTimeIntoDb(Realm mTimeCheckRealm, @Nullable Location lastKnownLocation, String excuse, boolean remote);
         void initScreenState(Realm mTimeCheckRealm);
 
         void putSettingsIntoDb(Realm mTimeCheckRealm);

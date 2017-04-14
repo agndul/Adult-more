@@ -38,7 +38,7 @@ class ChargeDelegate implements SettingsItemDelegate {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, SettingsData data) {
-
+        viewHolder.setData(data);
     }
 
     @Override
@@ -70,6 +70,7 @@ class ChargeDelegate implements SettingsItemDelegate {
         TextInputEditText maxChargeTiet;
         @BindView(R.id.max_charge_til)
         TextInputLayout maxChargeTil;
+        private SettingsData data;
 
         @OnTextChanged(R.id.init_tiet)
         public void onInitTextChanged(){
@@ -90,6 +91,14 @@ class ChargeDelegate implements SettingsItemDelegate {
         ChargeViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void setData(SettingsData data) {
+
+            initTiet.setText(String.valueOf(data.getInitialCharge()));
+            stepTiet.setText(String.valueOf(data.getDifference()));
+            maxChargeTiet.setText(String.valueOf(data.getMaxCharge()));
+
         }
 
     }

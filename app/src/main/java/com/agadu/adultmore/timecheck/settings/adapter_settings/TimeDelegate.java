@@ -36,7 +36,7 @@ public class TimeDelegate implements SettingsItemDelegate {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, SettingsData data) {
-
+        viewHolder.setData(data);
     }
 
     @Override
@@ -85,6 +85,15 @@ public class TimeDelegate implements SettingsItemDelegate {
         TimeViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+
+        public void setData(SettingsData data) {
+
+            startTimeTiet.setText(data.getStartTime());
+            lateMinsTiet.setText(data.getDiffTime());
+            maxTimeTiet.setText(data.getMaxTime());
+
         }
     }
 }

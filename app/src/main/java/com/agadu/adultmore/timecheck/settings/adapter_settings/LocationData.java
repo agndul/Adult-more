@@ -6,11 +6,9 @@ package com.agadu.adultmore.timecheck.settings.adapter_settings;
 
 public class LocationData extends AdapterData{
 
-    private String location;
-
-    private double longitude;
-
-    private double latitude;
+    private String location = "lalalla";
+    private double latitude = 50.079465;
+    private double longitude = 19.930948;
 
     public String getLocation() {
         return location;

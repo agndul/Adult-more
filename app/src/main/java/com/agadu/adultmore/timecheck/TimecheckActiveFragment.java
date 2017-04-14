@@ -1,10 +1,14 @@
 package com.agadu.adultmore.timecheck;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.percent.PercentRelativeLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.realm.Realm;
+
+import static com.agadu.adultmore.timecheck.TimeCheckActivity.sLocationProvider;
 
 /**
  * Created by Yoga on 2017-03-09.
@@ -70,13 +76,33 @@ public class TimecheckActiveFragment extends Fragment implements TimeCheckContra
 
     @OnClick(R.id.start_prl)
     public void onTimeButtonClick() {
-        if (mRemotePRL.isSelected() || mTimeCheckPresenter.checkDestLocation(mTimeCheckLocationManager)) {
-            mTimeCheckPresenter.putTimeIntoDb(mTimeCheckRealm, mTimeCheckLocationManager,
-                    !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
-            mTimeCheckPresenter.refresh();
-            setStartActive();
-        } else
-            Toast.makeText(this.getActivity(), R.string.wrong_destination_place_label, Toast.LENGTH_LONG).show();
+        if (ActivityCompat.checkSelfPermission(this.getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (mRemotePRL.isSelected()) {
+                mTimeCheckPresenter.putTimeIntoDb(mTimeCheckRealm, null,
+                        !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
+                mTimeCheckPresenter.refresh();
+                setStartActive();
+
+            }else {
+                Toast.makeText(this.getActivity(), R.string.enable_gps, Toast.LENGTH_LONG).show();
+
+            }
+        }else {
+            Location lastKnownLocation = mTimeCheckLocationManager.getLastKnownLocation(sLocationProvider);
+
+            if (mRemotePRL.isSelected() || mTimeCheckPresenter.checkDestLocation(lastKnownLocation)) {
+
+                mTimeCheckPresenter.putTimeIntoDb(mTimeCheckRealm, lastKnownLocation,
+                        !excuseTiet.isEnabled() ? excuseTiet.getText().toString() : "", mRemotePRL.isSelected());
+                mTimeCheckPresenter.refresh();
+                setStartActive();
+            } else {
+                Toast.makeText(this.getActivity(), R.string.wrong_destination_place_label, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 

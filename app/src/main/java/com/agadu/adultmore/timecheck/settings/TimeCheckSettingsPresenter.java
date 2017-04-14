@@ -21,6 +21,7 @@ public class TimeCheckSettingsPresenter implements TimecheckSettingsContract.Pre
         mView = view;
     }
 
+    @Override
     public void updateSettings(Realm mTimeCheckRealm, AdapterGeneralData mAdapterGeneralData) {
 
         mTimeCheckRealm.beginTransaction();
@@ -31,10 +32,27 @@ public class TimeCheckSettingsPresenter implements TimecheckSettingsContract.Pre
         settingsData.setInitialCharge(mAdapterGeneralData.getChargeData().getInitialCharge());
         settingsData.setDifference(mAdapterGeneralData.getChargeData().getDifference());
         settingsData.setMaxCharge(mAdapterGeneralData.getChargeData().getMaxCharge());
-//        settingsData.setDestLatitude(mAdapterGeneralData.getLocationData().getLatitude());
-  //      settingsData.setDestLongitude(mAdapterGeneralData.getLocationData().getLongitude());
+        settingsData.setLocation(mAdapterGeneralData.getLocationData().getLocation());
+        settingsData.setDestLatitude(mAdapterGeneralData.getLocationData().getLatitude());
+        settingsData.setDestLongitude(mAdapterGeneralData.getLocationData().getLongitude());
         mTimeCheckRealm.commitTransaction();
-        mView.goToTimeCheck();
     }
 
+
+    @Override
+    public void removeLast(Realm mTimeCheckRealm){
+
+        mTimeCheckRealm.beginTransaction();
+        mTimeCheckRealm.where(SettingsData.class).findAll().deleteLastFromRealm();
+        mTimeCheckRealm.commitTransaction();
+
+    }
+    @Override
+    public void initView(Realm mTimeCheckRealm) {
+        if(mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty()) {
+            mView.initAdapter(new SettingsData());
+        }else {
+            mView.initAdapter(mTimeCheckRealm.where(SettingsData.class).findAll().last());
+        }
+    }
 }

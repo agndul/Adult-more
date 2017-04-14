@@ -14,12 +14,13 @@ public class SettingsData extends RealmObject {
     private String diffTime = "00:15:00";
     private String maxTime = "1:00:00";
     private float initialCharge = 2f;
-
     private float difference = 1f;
     private float maxCharge = 10f;
 
+    //todo: fix location
     private double destLatitude = 50.079465;
     private double destLongitude = 19.930948;
+    private String location = "Zyczkowskiego";
 
 
     public float getInitialCharge() {
@@ -84,5 +85,12 @@ public class SettingsData extends RealmObject {
 
     public void setMaxTime(String maxTime) {
         this.maxTime = maxTime;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
