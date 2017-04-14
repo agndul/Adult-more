@@ -20,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.agadu.adultmore.helpers.TimeFormatsHelper.MINS_IN_HOUR;
+
 /**
  * Created by Yoga on 2017-03-19.
  */
@@ -87,33 +89,33 @@ public class TimeCheckStatisticsAdapter extends RecyclerView.Adapter<RecyclerVie
             remoteIndicatorIv.setVisibility(timeCheckObject.isRemote() ? View.VISIBLE : View.GONE);
             dateLabelTv.setText(TimeFormatsHelper.returnPreviewDate(timeCheckObject.getTime()));
             int diffMins = (int) TimeFormatsHelper.returnMinsDiff(timeCheckObject.getStartTime(), settingsData.getStartTime());
-            int diffHours = diffMins/60;
-            float money=0;
+            float diffHours = (float) diffMins/60;
+            float money;
 //todo: fix!! conditions
-            if (diffHours > 0) {
+            if (diffHours > settingsData.getMaxTime()) {
                 money = settingsData.getMaxCharge();
-                lateLabelTv.setText(R.string.late_label_hour);
-            } else if (diffHours == 0 && diffMins > 0){
+                lateLabelTv.setText(String.format(Locale.US, context.getString(R.string.late_label_hour), settingsData.getMaxTime()));
+            } else if (diffHours <= settingsData.getMaxTime() && diffMins > 0){
                 money = countCharge(diffMins);
-                lateLabelTv.setText(String.format(context.getString(R.string.late_label_mins), diffMins));
+                lateLabelTv.setText(String.format(Locale.US, context.getString(R.string.late_label_mins), diffMins));
             } else {
-                money=0;
+                money = 0;
                 lateLabelTv.setText(R.string.late_label_no);
             }
             moneyAddedTv.setText(money==0 ? context.getString(R.string.no_charge_label) : String.format(Locale.UK, context.getString(R.string.charge_label), money));
 
             readExcuseIv.setVisibility(!timeCheckObject.getExcuse().isEmpty() ? View.VISIBLE : View.GONE);
-            if(timeCheckObject.isExcuseAccepted() != null){
+            if(timeCheckObject.isExcuseAccepted() != null)
                 readExcuseIv.setImageResource(timeCheckObject.isExcuseAccepted() ? R.drawable.ic_comment_check_grey600_24dp : R.drawable.ic_comment_alert_grey600_24dp);
-            }
         }
 
         private float countCharge(int minsLate) throws ParseException {
             float charge = settingsData.getInitialCharge();
-            int firstMinsLate = TimeFormatsHelper.returnMins(settingsData.getDiffTime());
-            int maxHoursLate = TimeFormatsHelper.returnMins(settingsData.getMaxTime());
+            float firstMinsLate = settingsData.getDiffTime();
+            float maxHoursLate = settingsData.getMaxTime();
+
             if(minsLate > firstMinsLate){
-                for(int i=firstMinsLate; i<maxHoursLate; i+=firstMinsLate){
+                for(float i=firstMinsLate; i<maxHoursLate*MINS_IN_HOUR; i+=firstMinsLate){
                     if(minsLate>i)
                         charge += settingsData.getDifference();
                     else

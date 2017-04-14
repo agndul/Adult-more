@@ -26,8 +26,8 @@ import io.realm.Realm;
 
 public class DashboardActivity extends AppCompatActivity implements DashboardContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
     @Inject Context mContext;
     @Inject DashboardPresenter mDashboardPresenter;
     @Inject Realm mTimeCheckRealm;
@@ -58,7 +58,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile_icon:
-                Toast.makeText(this, R.string.error_to_do_section, Toast.LENGTH_SHORT).show();
+                showError(getString(R.string.error_to_do_section));
                 break;
             default:
                 break;
@@ -68,29 +68,25 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 
     @OnClick(R.id.time_check_btn)
     public void onTimeCheckButtonClick() {
-        Intent intent;
-        if(!mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty()) {
-            intent = new Intent(this, TimeCheckActivity.class);
-        }else {
-            intent = new Intent(this, TimecheckSettingsActivity.class);
-        }
-        startActivity(intent);
+        if(!mTimeCheckRealm.where(SettingsData.class).findAll().isEmpty())
+            startActivity(new Intent(this, TimeCheckActivity.class));
+        else
+            startActivity(new Intent(this, TimecheckSettingsActivity.class));
     }
 
     @OnClick(R.id.eating_btn)
     public void onBiteCheckButtonClick() {
-        Intent intent = new Intent(this, BiteCheckActivity.class);
-        startActivity(intent);
+        showError(getString(R.string.error_to_do_section));
     }
 
     @OnClick(R.id.stretch_out_btn)
     public  void onStretchingButtonClick() {
-        Toast.makeText(this, R.string.error_to_do_section, Toast.LENGTH_SHORT).show();
+        showError(getString(R.string.error_to_do_section));
     }
 
     @OnClick(R.id.culture_btn)
     public void onCultureButtonClick() {
-        Toast.makeText(this, R.string.error_to_do_section, Toast.LENGTH_SHORT).show();
+        showError(getString(R.string.error_to_do_section));
     }
 
     public void showError(String errorText) {

@@ -27,8 +27,8 @@ public class TimeCheckSettingsPresenter implements TimecheckSettingsContract.Pre
         mTimeCheckRealm.beginTransaction();
         settingsData = mTimeCheckRealm.createObject(SettingsData.class);
         settingsData.setStartTime(mAdapterGeneralData.getTimeData().getStartTime());
-        settingsData.setMaxTime(mAdapterGeneralData.getTimeData().getMaxLateHours());
-        settingsData.setDiffTime(mAdapterGeneralData.getTimeData().getDifferenceTime());
+        settingsData.setMaxTime(Float.parseFloat(mAdapterGeneralData.getTimeData().getMaxLateHours()));
+        settingsData.setDiffTime(Float.parseFloat(mAdapterGeneralData.getTimeData().getDifferenceTime()));
         settingsData.setInitialCharge(mAdapterGeneralData.getChargeData().getInitialCharge());
         settingsData.setDifference(mAdapterGeneralData.getChargeData().getDifference());
         settingsData.setMaxCharge(mAdapterGeneralData.getChargeData().getMaxCharge());

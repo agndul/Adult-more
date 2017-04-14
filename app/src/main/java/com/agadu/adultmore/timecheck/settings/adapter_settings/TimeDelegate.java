@@ -89,11 +89,9 @@ public class TimeDelegate implements SettingsItemDelegate {
 
 
         public void setData(SettingsData data) {
-
             startTimeTiet.setText(data.getStartTime());
-            lateMinsTiet.setText(data.getDiffTime());
-            maxTimeTiet.setText(data.getMaxTime());
-
+            lateMinsTiet.setText(String.valueOf(data.getDiffTime()));
+            maxTimeTiet.setText(String.valueOf(data.getMaxTime()));
         }
     }
 }

@@ -56,7 +56,7 @@
 
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
-                    android:inputType="time"
+                    android:inputType="numberDecimal"
                     android:id="@+id/late_mins_tiet"
                     android:layout_height="wrap_content"
                     android:hint="@string/minutes_late_label"/>
@@ -71,7 +71,7 @@
 
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
-                    android:inputType="time"
+                    android:inputType="numberDecimal"
                     android:layout_height="wrap_content"
                     android:id="@+id/max_time_tiet"
                     android:hint="@string/max_late_label"/>

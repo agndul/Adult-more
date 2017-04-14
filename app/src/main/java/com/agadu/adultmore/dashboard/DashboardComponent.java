@@ -16,5 +16,4 @@ import dagger.Component;
 
 public interface DashboardComponent {
     void inject(DashboardActivity activity);
-    // to update the fields in your activities
 }

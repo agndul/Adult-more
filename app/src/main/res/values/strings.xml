@@ -29,7 +29,7 @@
     <string name="excuse_accepted">Accept</string>
     <string name="excuse_rejected">Reject</string>
     <string name="late_label_mins">%d minutes late:(</string>
-    <string name="late_label_hour">More than 1 hour late :(</string>
+    <string name="late_label_hour">More than %.2f hour(s) late :(</string>
     <string name="late_label_no">Made it on time! Hooray:)</string>
     <string name="charge_label">+%.2f PLN</string>
     <string name="no_charge_label">No charge taken</string>
@@ -45,8 +45,8 @@
     <string name="step_charge_label">Step charge</string>
     <string name="max_charge_label">Max charge</string>
     <string name="start_time_label">Start time</string>
-    <string name="minutes_late_label">Minutes late</string>
-    <string name="max_late_label">Max late (h)</string>
+    <string name="minutes_late_label">Min minutes late</string>
+    <string name="max_late_label">Max hours late</string>
     <string name="location_input_label">Type location</string>
     <string name="location_section_title">Location</string>
     <string name="enable_gps">Enable GPS function</string>

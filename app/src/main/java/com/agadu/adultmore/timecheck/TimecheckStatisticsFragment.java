@@ -75,7 +75,6 @@ public class TimecheckStatisticsFragment extends Fragment implements TimeCheckCo
                         mTimeCheckPresenter.setExcuseAccepted(mTimeCheckRealm, layoutPosition, false);
                     }
                 })
-
                 .show();
     }
 }

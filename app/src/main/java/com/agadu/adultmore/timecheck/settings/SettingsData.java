@@ -10,9 +10,9 @@ public class SettingsData extends RealmObject {
     public static double RADIUS = 0.00045;
     public static float SPECIAL_CHARGE = 0.5f;
 
-    private String startTime = "8:00:00";
-    private String diffTime = "00:15:00";
-    private String maxTime = "1:00:00";
+    private String startTime = "8:00";
+    private float diffTime = 15f;
+    private float maxTime = 1.5f;
     private float initialCharge = 2f;
     private float difference = 1f;
     private float maxCharge = 10f;
@@ -20,7 +20,7 @@ public class SettingsData extends RealmObject {
     //todo: fix location
     private double destLatitude = 50.079465;
     private double destLongitude = 19.930948;
-    private String location = "Zyczkowskiego";
+    private String location = "street name";
 
 
     public float getInitialCharge() {
@@ -71,19 +71,19 @@ public class SettingsData extends RealmObject {
         this.startTime = startTime;
     }
 
-    public String getDiffTime() {
+    public float getDiffTime() {
         return diffTime;
     }
 
-    public void setDiffTime(String diffTime) {
+    public void setDiffTime(float diffTime) {
         this.diffTime = diffTime;
     }
 
-    public String getMaxTime() {
+    public float getMaxTime() {
         return maxTime;
     }
 
-    public void setMaxTime(String maxTime) {
+    public void setMaxTime(float maxTime) {
         this.maxTime = maxTime;
     }
     public void setLocation(String location) {

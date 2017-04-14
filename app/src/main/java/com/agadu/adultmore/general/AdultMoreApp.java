@@ -17,8 +17,8 @@ import static com.agadu.adultmore.general.Constants.DB_FILE_NAME_RM;
 
 public class AdultMoreApp extends Application {
 
-    ApplicationComponent applicationComponent;
-    RealmConfiguration realmConfiguration;
+    private ApplicationComponent applicationComponent;
+    private RealmConfiguration realmConfiguration;
 
     @Override
     public void onCreate() {
