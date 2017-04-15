@@ -94,8 +94,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
     }
 
     public void showError(String errorText) {
-        Toast.makeText(this, errorText, Toast.LENGTH_SHORT).show();
-
         Snackbar.make(constraintLayout, errorText, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }

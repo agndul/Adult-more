@@ -73,13 +73,13 @@ public class TCSettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         for (SettingsItemDelegate delegate: delegates) {
             switch (delegate.getViewType()) {
                 case CHARGE_TYPE:
-                    mData.setChargeData((ChargeData) delegate.getData());
+                    mData.setChargeData(((ChargeDelegate)delegate).getData());
                      break;
                 case TIME_TYPE:
-                    mData.setTimeData((TimeData) delegate.getData());
+                    mData.setTimeData(((TimeDelegate)delegate).getData());
                     break;
                 case LOCATION_TYPE:
-                    mData.setLocationData((LocationData) delegate.getData());
+                    mData.setLocationData(((LocationDelegate)delegate).getData());
                     break;
             }
         }

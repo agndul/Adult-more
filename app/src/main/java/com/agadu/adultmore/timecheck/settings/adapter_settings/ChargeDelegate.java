@@ -46,8 +46,7 @@ class ChargeDelegate implements SettingsItemDelegate {
         return CHARGE_TYPE;
     }
 
-    @Override
-    public AdapterData getData() {
+    public ChargeData getData() {
         return chargeData;
     }
 

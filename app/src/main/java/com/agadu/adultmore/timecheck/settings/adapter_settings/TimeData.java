@@ -4,7 +4,7 @@ package com.agadu.adultmore.timecheck.settings.adapter_settings;
  * Created by Yoga on 2017-04-13.
  */
 
-public class TimeData extends AdapterData{
+public class TimeData {
 
     public String getStartTime() {
         return startTime;

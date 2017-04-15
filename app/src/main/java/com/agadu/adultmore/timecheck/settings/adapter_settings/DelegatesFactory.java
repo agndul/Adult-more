@@ -14,7 +14,6 @@ class DelegatesFactory {
         list.add(new ChargeDelegate());
         list.add(new TimeDelegate());
         list.add(new LocationDelegate());
-
         return list;
     }
 }

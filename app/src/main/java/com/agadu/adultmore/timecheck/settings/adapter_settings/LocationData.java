@@ -4,7 +4,7 @@ package com.agadu.adultmore.timecheck.settings.adapter_settings;
  * Created by Yoga on 2017-04-13.
  */
 
-public class LocationData extends AdapterData{
+public class LocationData {
 
     private String location = "lalalla";
     private double latitude = 50.079465;

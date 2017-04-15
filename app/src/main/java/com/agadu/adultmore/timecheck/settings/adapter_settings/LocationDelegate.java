@@ -52,8 +52,7 @@ class LocationDelegate implements SettingsItemDelegate {
         return CheckTextFieldsHelper.checkFieldsEmpty(viewHolder.locationTiet);
     }
 
-    @Override
-    public AdapterData getData() {
+    public LocationData getData() {
         return mLocationData;
     }
 

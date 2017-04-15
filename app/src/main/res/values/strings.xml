@@ -55,5 +55,6 @@
 
     <!-- Stretching -->
     <string name="section_format">Stretching no: %1$d</string>
+    <string name="stretchout_title">Stretch out!</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.agadu.adultmore.stretch_out
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -10,11 +11,10 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import com.agadu.adultmore.R
+import com.agadu.adultmore.timecheck.settings.TimecheckSettingsActivity
 
 class StretchActivity : AppCompatActivity() {
 
@@ -38,8 +38,9 @@ class StretchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_stretchout)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
-        toolbar.title="Stretch out!"
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = getString(R.string.stretchout_title)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -54,6 +55,21 @@ class StretchActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_stretchout, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                super.onBackPressed()
+                return true
+            }
+        }
+        return false
     }
 
     /**

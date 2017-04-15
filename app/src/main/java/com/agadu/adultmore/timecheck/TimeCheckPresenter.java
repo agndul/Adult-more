@@ -76,7 +76,8 @@ public class TimeCheckPresenter implements TimeCheckContract.Presenter {
         mTimeCheckRealm.beginTransaction();
 
         TimeCheckObj timeCheckObject = mTimeCheckRealm.createObject(TimeCheckObj.class);
-        startDate = TimeFormatsHelper.returnDBDate(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getDate());
+        if(lastKnownLocation==null) startDate = TimeFormatsHelper.returnDBDate(Calendar.getInstance().getTime());
+        else startDate = TimeFormatsHelper.returnDBDate(lastKnownLocation.getTime());
         startTime= TimeFormatsHelper.returnDBTime(lastKnownLocation!=null ? lastKnownLocation.getTime() : Calendar.getInstance().getTime().getTime());
         timeCheckObject.setStartDate(startDate);
         timeCheckObject.setStartTime(startTime);

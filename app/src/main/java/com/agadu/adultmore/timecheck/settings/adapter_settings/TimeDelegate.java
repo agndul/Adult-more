@@ -49,8 +49,7 @@ public class TimeDelegate implements SettingsItemDelegate {
         return CheckTextFieldsHelper.checkFieldsEmpty(viewHolder.startTimeTiet, viewHolder.lateMinsTiet, viewHolder.maxTimeTiet);
     }
 
-    @Override
-    public AdapterData getData() {
+    public TimeData getData() {
         return timeData;
     }
 

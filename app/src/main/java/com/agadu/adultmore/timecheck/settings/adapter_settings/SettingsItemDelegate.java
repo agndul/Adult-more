@@ -17,7 +17,5 @@ interface SettingsItemDelegate {
     void onBindViewHolder(RecyclerView.ViewHolder holder, SettingsData data);
     int getViewType();
     boolean isAnyFieldEmpty();
-
-    AdapterData getData();
 }
 
