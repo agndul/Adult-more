@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
+
     <style name="AppThemeDarkNoAction" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
@@ -13,6 +14,7 @@
         <item name="colorAccent">@color/primary_light</item>
 
     </style>
+
     <style name="AppThemeDark" parent="ThemeOverlay.AppCompat.Dark">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
@@ -29,6 +31,10 @@
         <item name="android:textColorPrimary">@color/primary_text</item>
         <item name="android:background">@color/primary_dark</item>
     </style>
+
+    <style name="AppThemeDarkNoAction.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppThemeDarkNoAction.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

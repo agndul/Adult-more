@@ -50,6 +50,10 @@
     <string name="location_input_label">Type location</string>
     <string name="location_section_title">Location</string>
     <string name="enable_gps">Enable GPS function</string>
+    <string name="title_activity_stretchout">StretchoutActivity</string>
+    <string name="action_settings">Settings</string>
 
+    <!-- Stretching -->
+    <string name="section_format">Stretching no: %1$d</string>
 
 </resources>

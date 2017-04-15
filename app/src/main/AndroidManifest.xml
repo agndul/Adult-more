@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.agadu.adultmore">
+    package="com.agadu.adultmore">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name="com.agadu.adultmore.general.AdultMoreApp"
+        android:name=".general.AdultMoreApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDarkNoAction">
         <activity
-            android:screenOrientation="portrait"
-            android:name="com.agadu.adultmore.dashboard.DashboardActivity">
+            android:name=".dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".timecheck.TimeCheckActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:name="com.agadu.adultmore.timecheck.TimeCheckActivity" />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".bite_check.BiteCheckActivity"/>
+            android:name=".bite_check.BiteCheckActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".timecheck.settings.TimecheckSettingsActivity" />
+        <activity
+            android:name=".stretch_out.StretchActivity"
+            android:label="@string/title_activity_stretchout"
+            android:theme="@style/AppThemeDarkNoAction"></activity>
     </application>
 
 </manifest>

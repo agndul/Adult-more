@@ -3,6 +3,8 @@ package com.agadu.adultmore.dashboard;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.agadu.adultmore.R;
-import com.agadu.adultmore.bite_check.BiteCheckActivity;
 import com.agadu.adultmore.general.AdultMoreApp;
+import com.agadu.adultmore.stretch_out.StretchActivity;
 import com.agadu.adultmore.timecheck.TimeCheckActivity;
 import com.agadu.adultmore.timecheck.settings.SettingsData;
 import com.agadu.adultmore.timecheck.settings.TimecheckSettingsActivity;
@@ -27,6 +29,7 @@ import io.realm.Realm;
 public class DashboardActivity extends AppCompatActivity implements DashboardContract.View {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.cl) ConstraintLayout constraintLayout;
 
     @Inject Context mContext;
     @Inject DashboardPresenter mDashboardPresenter;
@@ -81,7 +84,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 
     @OnClick(R.id.stretch_out_btn)
     public  void onStretchingButtonClick() {
-        showError(getString(R.string.error_to_do_section));
+
+        startActivity(new Intent(this, StretchActivity.class));
     }
 
     @OnClick(R.id.culture_btn)
@@ -91,5 +95,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 
     public void showError(String errorText) {
         Toast.makeText(this, errorText, Toast.LENGTH_SHORT).show();
+
+        Snackbar.make(constraintLayout, errorText, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 }
